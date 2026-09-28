@@ -27,4 +27,4 @@
 /bu-adres-yok-thinktool-test 404
 /thinktool 301 /urun/thinktool-ariza-tespit-cihazi
 /hesabim/ 301 /siparis-takip
-/uploads/33-320.webp 200
+/uploads/THINKTOOL-Expert-399-t399webp-320.webp 200

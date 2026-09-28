@@ -42,6 +42,8 @@ mb_internal_encoding('UTF-8');
 error_reporting(E_ALL);
 ini_set('display_errors', APP_ENV === 'development' ? '1' : '0');
 ini_set('log_errors', '1');
+// JSON'da 48.878 gibi kısa ondalık (sunucu php.ini'si 17 basamak verebiliyor)
+ini_set('serialize_precision', '-1');
 
 // İzinler: görseller web sunucusunca okunur (web kökündeki "uploads" bağlantısı); geri kalan her şey yalnızca hesaba açıktır.
 foreach (['' => 0711, '/uploads' => 0755, '/logs' => 0700, '/mails' => 0700, '/backups' => 0700, '/locks' => 0700] as $dir => $mode) {
