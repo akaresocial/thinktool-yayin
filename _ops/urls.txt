@@ -17,7 +17,8 @@
 /version.txt 200
 /api/version.php 200
 /api/catalog.php 200
-/yonetim/giris.php 200
+/yonetim/ 303
+/yonetim/assets/admin.css 200
 /yonetim 301 /yonetim/
 /_app/bootstrap.php 403
 /_app/cli.php 403
