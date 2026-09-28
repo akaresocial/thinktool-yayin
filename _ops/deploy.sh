@@ -196,11 +196,12 @@ while IFS= read -r l; do [ -n "$l" ] && log "uygulama: $l"; done <<< "$out"
 stage="$OPS/stage-$rid"
 rm -rf "$stage" && mkdir -p "$stage"
 cp -a "$rel/public/." "$stage/" || { log "hazırlık: HATA"; status "stage-failed" "$remote_sha"; exit 1; }
-# cPanel'in PHP sürümü satırı (MultiPHP) eski .htaccess'ten korunur
-if [ -f "$WEBROOT/.htaccess" ] && grep -q 'php -- BEGIN cPanel-generated handler' "$WEBROOT/.htaccess"; then
-  { sed -n '/php -- BEGIN cPanel-generated handler/,/php -- END cPanel-generated handler/p' "$WEBROOT/.htaccess"; echo; cat "$stage/.htaccess"; } > "$stage/.htaccess.new" \
+# cPanel'in yazdığı bloklar (MultiPHP: PHP sürümü ve php.ini ayarları) eski .htaccess'ten korunur
+if [ -f "$WEBROOT/.htaccess" ] && grep -q 'BEGIN cPanel-generated' "$WEBROOT/.htaccess"; then
+  { sed -n '/BEGIN cPanel-generated/,/END cPanel-generated/p' "$WEBROOT/.htaccess"; echo; cat "$stage/.htaccess"; } > "$stage/.htaccess.new" \
     && mv "$stage/.htaccess.new" "$stage/.htaccess"
 fi
+grep -q 'cPanel-generated handler' "$stage/.htaccess" || log "uyarı: .htaccess'te cPanel PHP sürümü satırı yok — alan adının PHP sürümü MultiPHP'den 8.3 olmalı"
 
 # Korunan girdiler: asla taşınmaz/silinmez
 PRESERVE=" .well-known cgi-bin .user.ini php.ini uploads wp-content error_log "
