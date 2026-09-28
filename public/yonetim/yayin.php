@@ -30,6 +30,27 @@ admin_header('Yayın durumu', 'yayin');
   </ul>
   <p class="muted small">İçerik sürümü: panel <?= (int) $content['version'] ?> · sitede <?= (int) ($built['contentVersion'] ?? 0) ?><?= !empty($built['source']) ? ' · kod ' . e(substr((string) $built['source'], 0, 7)) : '' ?></p>
 </section>
+<?php
+$gd = function_exists('gd_info') ? gd_info() : [];
+$lastBackup = glob(DATA_DIR . '/backups/thinktool-*.sqlite.gz') ?: [];
+rsort($lastBackup);
+$system = [
+    'PHP' => PHP_VERSION,
+    'SQLite' => (string) q_val('SELECT sqlite_version()'),
+    'Görsel işleme (WebP)' => !empty($gd['WebP Support']) ? 'var' : 'YOK',
+    'E-posta (mail)' => function_exists('mail') ? 'var' : 'YOK',
+    'Son zamanlanmış görev' => meta_get('last_cron_at') ? format_date((string) meta_get('last_cron_at'), true) : '—',
+    'Son yedek' => $lastBackup ? basename($lastBackup[0]) . ' (' . round(filesize($lastBackup[0]) / 1024) . ' KB)' : '—',
+];
+?>
+<section class="card">
+  <header class="card-head"><h2>Sistem</h2></header>
+  <table class="table"><tbody>
+  <?php foreach ($system as $k => $v): ?>
+    <tr><td class="muted"><?= e($k) ?></td><td><?= e($v) ?></td></tr>
+  <?php endforeach; ?>
+  </tbody></table>
+</section>
 <?php if ($log): ?>
 <section class="card">
   <header class="card-head"><h2>Yayın günlüğü</h2></header>

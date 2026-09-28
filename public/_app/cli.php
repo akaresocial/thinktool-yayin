@@ -111,12 +111,46 @@ function cron_run(callable $out): void
     meta_set('last_cron_at', now_iso());
 }
 
+/** Eski SQLite için yedek: tablo ve dizinler aynı okuma anındaki verilerle yeni bir dosyaya kopyalanır. */
+function backup_by_attach(string $file): void
+{
+    $pdo = db();
+    @unlink($file);
+    $pdo->exec('ATTACH DATABASE ' . $pdo->quote($file) . ' AS bk');
+    try {
+        $pdo->exec('BEGIN');
+        $objects = $pdo->query("SELECT type, name, sql FROM main.sqlite_master WHERE sql IS NOT NULL AND name NOT LIKE 'sqlite_%' ORDER BY CASE type WHEN 'table' THEN 0 ELSE 1 END")->fetchAll();
+        foreach ($objects as $o) {
+            $name = '"' . str_replace('"', '""', $o['name']) . '"';
+            if ($o['type'] === 'table') {
+                $pdo->exec((string) preg_replace('/^CREATE\s+TABLE\s+(IF\s+NOT\s+EXISTS\s+)?/i', 'CREATE TABLE bk.', $o['sql']));
+                $pdo->exec("INSERT INTO bk.$name SELECT * FROM main.$name");
+            } elseif ($o['type'] === 'index') {
+                $pdo->exec((string) preg_replace('/^CREATE\s+(UNIQUE\s+)?INDEX\s+(IF\s+NOT\s+EXISTS\s+)?/i', 'CREATE $1INDEX bk.', $o['sql']));
+            }
+        }
+        $pdo->exec('COMMIT');
+    } catch (Throwable $e) {
+        if ($pdo->inTransaction()) {
+            $pdo->exec('ROLLBACK');
+        }
+        throw $e;
+    } finally {
+        $pdo->exec('DETACH DATABASE bk');
+    }
+}
+
 /** Veritabanının tutarlı kopyası (site çalışırken bile güvenli), son 14 gün saklanır. */
 function backup_run(): string
 {
     $dir = DATA_DIR . '/backups';
     $file = $dir . '/thinktool-' . date('Ymd-His') . '.sqlite';
-    db()->exec('VACUUM INTO ' . db()->quote($file));
+    // VACUUM INTO SQLite 3.27+ ister; sunucudaki sürüm daha eskiyse tablolar tek okuma işleminde kopyalanır.
+    if (version_compare((string) q_val('SELECT sqlite_version()'), '3.27.0', '>=')) {
+        db()->exec('VACUUM INTO ' . db()->quote($file));
+    } else {
+        backup_by_attach($file);
+    }
     $gz = $file . '.gz';
     file_put_contents($gz, gzencode((string) file_get_contents($file), 6));
     unlink($file);
