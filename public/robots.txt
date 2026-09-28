@@ -1,0 +1,11 @@
+User-Agent: *
+Allow: /
+Disallow: /yonetim
+Disallow: /api/
+Disallow: /sepet
+Disallow: /odeme
+Disallow: /siparis
+Disallow: /karsilastir?
+
+Host: https://thinktool.com.tr
+Sitemap: https://thinktool.com.tr/sitemap.xml

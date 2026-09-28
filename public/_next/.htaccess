@@ -1,0 +1,6 @@
+# otomatik — scripts/package.mjs
+<IfModule mod_headers.c>
+  <FilesMatch ".">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>

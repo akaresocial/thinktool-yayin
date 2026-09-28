@@ -1,0 +1,29 @@
+# otomatik — scripts/package.mjs · biçim: yol beklenen_kod [beklenen_hedef]
+/ 200
+/urunler 200
+/urun/thinktool-expert-399-ariza-tespit-cihazi 200
+/urun/thinktool-expert-399-ariza-tespit-cihazi/ 301 /urun/thinktool-expert-399-ariza-tespit-cihazi
+/karsilastir 200
+/blog 200
+/blog/arac-ariza-tespit-sistemi-kullanimi 200
+/iletisim 200
+/hakkimizda 200
+/sepet 200
+/odeme 200
+/siparis 200
+/siparis-takip 200
+/sitemap.xml 200
+/robots.txt 200
+/version.txt 200
+/api/version.php 200
+/api/catalog.php 200
+/yonetim/giris.php 200
+/yonetim 301 /yonetim/
+/_app/bootstrap.php 403
+/_app/cli.php 403
+/yonetim/_inc/admin.php 403
+/.htaccess 403
+/bu-adres-yok-thinktool-test 404
+/thinktool 301 /urun/thinktool-ariza-tespit-cihazi
+/hesabim/ 301 /siparis-takip
+/uploads/33-320.webp 200
