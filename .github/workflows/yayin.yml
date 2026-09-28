@@ -1,0 +1,132 @@
+# thinktool.com.tr — otomatik derleme ve yayın.
+# Bu dosya yayın deposunda (akaresocial/thinktool-yayin) .github/workflows/yayin.yml olarak durur; kaynağı özel depoda
+# ops/github/yayin.yml'dir (değiştirince iki yere de koyun).
+#
+# Her 10 dakikada bir: özel kaynak deposunda yeni commit var mı, ya da yönetim panelinde içerik değişti mi (api/version.php)?
+# Değiştiyse: içeriği canlı siteden al (api/export.php) → statik siteyi derle → paketle → main dalına gönder.
+# Sunucu (cPanel cron) main dalını 2 dakikada bir kontrol eder ve yeni sürümü kurar.
+name: Yayın
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Değişiklik olmasa da yeniden derle'
+        type: boolean
+        default: false
+      snapshot:
+        description: 'İçeriği canlı siteden değil ilk sürümden (content/snapshot.json) al — yalnızca ilk kurulum'
+        type: boolean
+        default: false
+
+concurrency:
+  group: yayin
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+env:
+  SITE_URL: ${{ vars.SITE_URL || 'https://thinktool.com.tr' }}
+  API_BASE: ${{ vars.API_BASE || 'https://thinktool.com.tr' }}
+  SOURCE_REPO: akaresocial/thinktool-site
+
+jobs:
+  yayin:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Yayın deposu
+        uses: actions/checkout@v4
+        with:
+          path: yayin
+          fetch-depth: 1
+
+      - name: Değişiklik var mı?
+        id: check
+        env:
+          SOURCE_KEY: ${{ secrets.SOURCE_DEPLOY_KEY }}
+          FORCE: ${{ inputs.force || 'false' }}
+          SNAPSHOT: ${{ inputs.snapshot || 'false' }}
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SOURCE_KEY" > ~/.ssh/source_key && chmod 600 ~/.ssh/source_key
+          ssh-keyscan -t ed25519 github.com >> ~/.ssh/known_hosts 2>/dev/null
+          src=$(GIT_SSH_COMMAND="ssh -i ~/.ssh/source_key -o IdentitiesOnly=yes" git ls-remote "git@github.com:$SOURCE_REPO.git" refs/heads/main | cut -f1)
+          [ ${#src} -eq 40 ] || { echo "::error::Kaynak deposu okunamadı"; exit 1; }
+          ver=$(curl -fsS --max-time 20 "$API_BASE/api/version.php" 2>/dev/null | jq -r '.version // empty' 2>/dev/null || true)
+          prev_src=$(jq -r '.source // empty' yayin/public/version.json 2>/dev/null || true)
+          prev_ver=$(jq -r '.contentVersion // empty' yayin/public/version.json 2>/dev/null || true)
+          echo "kaynak: ${src:0:7} (yayında ${prev_src:0:7}) · içerik: ${ver:-okunamadı} (yayında ${prev_ver:-yok})"
+          build=false
+          if [ "$FORCE" = "true" ] || [ "$SNAPSHOT" = "true" ] || [ "$src" != "$prev_src" ]; then build=true; fi
+          if [ -n "$ver" ] && [ "$ver" != "$prev_ver" ]; then build=true; fi
+          echo "build=$build" >> "$GITHUB_OUTPUT"
+          echo "source=$src" >> "$GITHUB_OUTPUT"
+
+      - name: Kaynak kod
+        if: steps.check.outputs.build == 'true'
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.SOURCE_REPO }}
+          ref: ${{ steps.check.outputs.source }}
+          ssh-key: ${{ secrets.SOURCE_DEPLOY_KEY }}
+          path: src
+          persist-credentials: false
+
+      - name: Node.js
+        if: steps.check.outputs.build == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: src/package-lock.json
+
+      - name: İçerik (yönetim panelinden)
+        if: steps.check.outputs.build == 'true'
+        working-directory: src
+        env:
+          SNAPSHOT: ${{ inputs.snapshot || 'false' }}
+        run: |
+          set -euo pipefail
+          if [ "$SNAPSHOT" = "true" ]; then
+            echo "İlk kurulum: content/snapshot.json kullanılıyor"
+          else
+            curl -fsS --retry 3 --retry-delay 5 --max-time 90 "$API_BASE/api/export.php" -o content/current.json
+            jq -e '.version == 1 and (.products | length) > 0 and (.settings | type) == "object"' content/current.json > /dev/null \
+              || { echo "::error::İçerik dışa aktarımı geçersiz"; exit 1; }
+            echo "İçerik sürümü: $(jq -r .contentVersion content/current.json) · ürün: $(jq '.products | length' content/current.json)"
+          fi
+
+      - name: Derle ve paketle
+        if: steps.check.outputs.build == 'true'
+        working-directory: src
+        env:
+          NEXT_PUBLIC_SITE_URL: ${{ env.SITE_URL }}
+          NEXT_TELEMETRY_DISABLED: '1'
+          SOURCE_SHA: ${{ steps.check.outputs.source }}
+        run: |
+          set -euo pipefail
+          npm ci --no-audit --no-fund
+          npm run build
+          npm run package
+
+      - name: Yayına gönder
+        if: steps.check.outputs.build == 'true'
+        env:
+          SRC: ${{ steps.check.outputs.source }}
+        run: |
+          set -euo pipefail
+          cd yayin
+          rm -rf public _ops README.md
+          cp -a ../src/dist/public ../src/dist/_ops ../src/dist/README.md .
+          git config user.name "thinktool-yayin"
+          git config user.email "akaresocial@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then echo "Değişiklik yok"; exit 0; fi
+          git commit -q -m "Yayın $(cat _ops/release-id) · kaynak ${SRC:0:7} · içerik v$(jq -r .contentVersion public/version.json)"
+          git push -q origin HEAD:main
+          echo "Gönderildi: $(git rev-parse HEAD)"
