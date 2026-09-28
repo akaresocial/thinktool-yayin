@@ -229,6 +229,8 @@ rollback() {
   while IFS= read -r e; do [ -n "$e" ] && { [ -e "$WEBROOT/$e" ] || [ -L "$WEBROOT/$e" ]; } && mv "$WEBROOT/$e" "$fail_dir/$e"; done < "$snap/.moved-in"
   while IFS= read -r e; do [ -n "$e" ] && { [ -e "$snap/$e" ] || [ -L "$snap/$e" ]; } && mv "$snap/$e" "$WEBROOT/$e"; done < "$snap/.moved-out"
   while IFS= read -r c; do [ -n "$c" ] && [ -e "$snap/_wpc/$c" ] && mv "$snap/_wpc/$c" "$WEBROOT/wp-content/$c"; done < "$snap/.wpc-moved-out"
+  # geri konan .htaccess'in tarihi eski: sunucu (LiteSpeed) değişikliği fark etsin
+  [ -f "$WEBROOT/.htaccess" ] && touch "$WEBROOT/.htaccess"
   log "geri dönüş: önceki dosyalar yerine kondu; başarısız sürüm → $fail_dir"
 }
 
@@ -258,6 +260,8 @@ for p in "$stage"/* "$stage"/.[!.]*; do
     || { log "taşıma: HATA ($e)"; rollback; status "rolled-back" "$remote_sha" "move-in"; exit 1; }
 done
 rm -rf "$stage"
+# arşivden gelen dosyaların tarihi commit zamanıdır: sunucu (LiteSpeed) yeni .htaccess'i hemen okusun
+touch "$WEBROOT/.htaccess"
 # 3) görseller: web kökündeki "uploads" → ~/thinktool-data/uploads
 if [ ! -e "$WEBROOT/uploads" ] && [ ! -L "$WEBROOT/uploads" ]; then
   ln -s "$DATA/uploads" "$WEBROOT/uploads" && log "uploads bağlantısı oluşturuldu"
@@ -265,27 +269,36 @@ fi
 log "kuruldu: $remote_sha / $rid ($nfiles dosya; anlık yedek $snap)"
 
 # ---------------------------------------------------------------- canlı test
-sleep 2
-bad=0; checked=0
-urls="$rel/_ops/urls.txt"
-if [ -f "$urls" ]; then
-  while IFS= read -r line; do
-    [ -z "$line" ] && continue
-    case "$line" in \#*) continue ;; esac
-    path=$(echo "$line" | awk '{print $1}'); want=$(echo "$line" | awk '{print $2}'); loc=$(echo "$line" | awk '{print $3}')
-    res=$(curl -s -o /dev/null -w '%{http_code} %{redirect_url}' --max-time 20 -H 'Cache-Control: no-cache' "$SITE_URL$path")
-    code=${res%% *}; got=${res#* }
-    checked=$((checked+1))
-    if [ "$code" != "$want" ]; then bad=$((bad+1)); log "test: HATA $path → $code (beklenen $want)"; continue; fi
-    if [ -n "$loc" ] && [ "$got" != "$SITE_URL$loc" ]; then bad=$((bad+1)); log "test: HATA $path → $got (beklenen $SITE_URL$loc)"; fi
-  done < "$urls"
-fi
-live=$(curl -fsS --max-time 20 -H 'Cache-Control: no-cache' "$SITE_URL/version.txt?t=$(date +%s)" 2>/dev/null | head -1)
-case "$live" in "$rid"*) : ;; *) bad=$((bad+1)); log "test: HATA version.txt canlıda '$live' (beklenen $rid)" ;; esac
-api=$(curl -fsS --max-time 20 "$SITE_URL/api/version.php" 2>/dev/null)
-case "$api" in *'"ok":true'*) : ;; *) bad=$((bad+1)); log "test: HATA api/version.php yanıtı: ${api:0:200}" ;; esac
+# LiteSpeed .htaccess'i birkaç saniye önbellekte tutabilir: hata olursa testler aralıklı olarak 3 kez denenir.
+run_tests() {
+  bad=0; checked=0; : > "$OPS/test-errors.txt"
+  local urls="$rel/_ops/urls.txt" line u want loc res code got live api
+  if [ -f "$urls" ]; then
+    while IFS= read -r line; do
+      [ -z "$line" ] && continue
+      case "$line" in \#*) continue ;; esac
+      u=$(echo "$line" | awk '{print $1}'); want=$(echo "$line" | awk '{print $2}'); loc=$(echo "$line" | awk '{print $3}')
+      res=$(curl -s -o /dev/null -w '%{http_code} %{redirect_url}' --max-time 20 -H 'Cache-Control: no-cache' "$SITE_URL$u")
+      code=${res%% *}; got=${res#* }
+      checked=$((checked+1))
+      if [ "$code" != "$want" ]; then bad=$((bad+1)); echo "$u → $code (beklenen $want)" >> "$OPS/test-errors.txt"; continue; fi
+      if [ -n "$loc" ] && [ "$got" != "$SITE_URL$loc" ]; then bad=$((bad+1)); echo "$u → $got (beklenen $SITE_URL$loc)" >> "$OPS/test-errors.txt"; fi
+    done < "$urls"
+  fi
+  live=$(curl -fsS --max-time 20 -H 'Cache-Control: no-cache' "$SITE_URL/version.txt?t=$(date +%s)" 2>/dev/null | head -1)
+  case "$live" in "$rid"*) : ;; *) bad=$((bad+1)); echo "version.txt canlıda '$live' (beklenen $rid)" >> "$OPS/test-errors.txt" ;; esac
+  api=$(curl -fsS --max-time 20 "$SITE_URL/api/version.php" 2>/dev/null)
+  case "$api" in *'"ok":true'*) : ;; *) bad=$((bad+1)); echo "api/version.php yanıtı: ${api:0:200}" >> "$OPS/test-errors.txt" ;; esac
+}
+for attempt in 1 2 3; do
+  if [ "$attempt" -eq 1 ]; then sleep 3; else sleep 20; fi
+  run_tests
+  [ "$bad" -eq 0 ] && break
+  log "test: deneme $attempt — $bad hata ($(head -1 "$OPS/test-errors.txt"))"
+done
 
 if [ "$bad" -gt 0 ]; then
+  while IFS= read -r l; do log "test: HATA $l"; done < "$OPS/test-errors.txt"
   log "test: $bad/$checked hata — GERİ DÖNÜLÜYOR"
   rollback
   echo "$remote_sha" >> "$OPS/bad_shas"
@@ -297,7 +310,7 @@ mv "$OPS/installed.new" "$managed"
 echo "$remote_sha" > "$OPS/current_sha"
 echo "$rid" > "$OPS/current_release"
 status "live" "$remote_sha" "$checked test geçti"
-log "test: $checked/$checked geçti — CANLI"
+log "test: $checked/$checked geçti — CANLI (deneme $attempt)"
 
 # ---------------------------------------------------------------- temizlik (son $KEEP sürüm ve anlık yedek)
 ls -1dt "$OPS"/releases/*/ 2>/dev/null | tail -n +$((KEEP+1)) | xargs -r rm -rf
