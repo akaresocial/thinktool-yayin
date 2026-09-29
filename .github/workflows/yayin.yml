@@ -4,7 +4,8 @@
 #
 # Her 5 dakikada bir (GitHub zamanlaması gecikebilir): özel kaynak deposunda yeni commit var mı, ya da yönetim panelinde içerik değişti mi (api/version.php)?
 # Değiştiyse: içeriği canlı siteden al (api/export.php) → statik siteyi derle → paketle → main dalına gönder.
-# Sunucu (cPanel cron) main dalını her dakika kontrol eder ve yeni sürümü kurar.
+# Gönderir göndermez sunucudaki anlık tetiği (https://tetik.thinktool.com.tr/) çağırır ve kurulumu bekler (≈ 30 sn);
+# tetiğe ulaşılamazsa sunucunun cron'u (15 dakikada bir) main dalını kontrol edip yeni sürümü kurar.
 name: Yayın
 
 on:
@@ -122,6 +123,7 @@ jobs:
           npm run package
 
       - name: Yayına gönder
+        id: push
         if: steps.check.outputs.build == 'true'
         env:
           SRC: ${{ steps.check.outputs.source }}
@@ -136,4 +138,45 @@ jobs:
           if git diff --cached --quiet; then echo "Değişiklik yok"; exit 0; fi
           git commit -q -m "Yayın $(cat _ops/release-id) · kaynak ${SRC:0:7} · içerik v$(jq -r .contentVersion public/version.json)"
           git push -q origin HEAD:main
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
           echo "Gönderildi: $(git rev-parse HEAD)"
+
+      # Sunucu yeni sürümü hemen kursun: tetik (saf PHP, ops/tetik/index.php) indirir → doğrular → kurar → test eder.
+      # Tetiğe ulaşılamazsa (sunucunun güvenlik duvarı bazen GitHub makinelerini engelliyor) cron en geç 15 dakikada kurar;
+      # bu yüzden bu adım iş akışını hiçbir zaman başarısız saymaz.
+      - name: Anlık kurulum (tetik)
+        if: steps.push.outputs.sha != ''
+        continue-on-error: true
+        timeout-minutes: 6
+        env:
+          SHA: ${{ steps.push.outputs.sha }}
+          TETIK: https://tetik.thinktool.com.tr
+        run: |
+          set -u
+          durum() { curl -fsS --connect-timeout 10 -m 15 "$TETIK/?durum=1" 2>/dev/null || true; }
+          tetikle() { n=$((n + 1)); son=$SECONDS; echo "tetik $n: $(curl -sS --connect-timeout 10 -m 20 "$TETIK/" 2>&1 | head -c 200)"; }
+          n=0; son=0; ulasilamadi=0
+          tetikle
+          while [ "$SECONDS" -lt 300 ]; do
+            sleep 5
+            st=$(durum)
+            if [ -z "$st" ]; then
+              ulasilamadi=$((ulasilamadi + 1))
+              if [ "$ulasilamadi" -ge 6 ]; then echo "::warning::Tetiğe ulaşılamıyor; sunucu 15 dakika içinde cron ile kuracak"; exit 0; fi
+              continue
+            fi
+            ulasilamadi=0
+            if [ "$(jq -r '.canli_sha // empty' <<< "$st" 2>/dev/null)" = "$SHA" ]; then
+              echo "Canlıda (${SECONDS} sn): $SHA · $(jq -c .durum <<< "$st")"; exit 0
+            fi
+            state=$(jq -r 'if .durum.sha == env.SHA then .durum.state else empty end' <<< "$st" 2>/dev/null || true)
+            case "$state" in invalid|rolled-back|gated|stage-failed)
+              echo "::warning::Sunucu bu sürümü kurmadı ($state): $(jq -c .durum <<< "$st")"; exit 0 ;;
+            esac
+            # çalışan tetik yoksa yeniden tetikle (GitHub yeni commit'i geç göstermiş, indirme yarıda kalmış ya da cron
+            # kilidi tutuyor olabilir) — en fazla 6 kez, en az 25 sn arayla
+            if [ "$(jq -r '.calisiyor // false' <<< "$st" 2>/dev/null)" != "true" ] && [ $((SECONDS - son)) -ge 25 ] && [ "$n" -lt 6 ]; then
+              tetikle
+            fi
+          done
+          echo "::warning::Tetik 5 dakikada doğrulanamadı; sunucu 15 dakika içinde cron ile kuracak"
