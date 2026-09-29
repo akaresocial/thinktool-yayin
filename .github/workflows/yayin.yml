@@ -2,14 +2,14 @@
 # Bu dosya yayın deposunda (akaresocial/thinktool-yayin) .github/workflows/yayin.yml olarak durur; kaynağı özel depoda
 # ops/github/yayin.yml'dir (değiştirince iki yere de koyun).
 #
-# Her 10 dakikada bir: özel kaynak deposunda yeni commit var mı, ya da yönetim panelinde içerik değişti mi (api/version.php)?
+# Her 5 dakikada bir (GitHub zamanlaması gecikebilir): özel kaynak deposunda yeni commit var mı, ya da yönetim panelinde içerik değişti mi (api/version.php)?
 # Değiştiyse: içeriği canlı siteden al (api/export.php) → statik siteyi derle → paketle → main dalına gönder.
-# Sunucu (cPanel cron) main dalını 2 dakikada bir kontrol eder ve yeni sürümü kurar.
+# Sunucu (cPanel cron) main dalını her dakika kontrol eder ve yeni sürümü kurar.
 name: Yayın
 
 on:
   schedule:
-    - cron: '*/10 * * * *'
+    - cron: '*/5 * * * *'
   workflow_dispatch:
     inputs:
       force:
