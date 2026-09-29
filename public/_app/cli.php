@@ -40,9 +40,10 @@ try {
                 $r = content_import(json_decode((string) file_get_contents((string) $opt['seed']), true) ?: []);
                 $out('İlk içerik yüklendi: ' . json_encode($r, JSON_UNESCAPED_UNICODE));
             }
-            if ((int) q_val('SELECT COUNT(*) FROM users') === 0 && !is_file(DATA_DIR . '/allow-setup')) {
+            // Henüz yönetici yoksa her yayında kurulum ekranı 2 saatliğine (yeniden) açılır; ilk hesapla kalıcı olarak kapanır
+            if ((int) q_val('SELECT COUNT(*) FROM users') === 0) {
                 touch(DATA_DIR . '/allow-setup');
-                $out('İlk yönetici kurulumu açıldı (2 saat): /yonetim/kurulum.php');
+                $out('İlk yönetici kurulumu açık (2 saat): /yonetim/kurulum.php');
             }
             $out('Kurulum tamam. Şema sürümü: ' . meta_get('schema_version'));
             break;
