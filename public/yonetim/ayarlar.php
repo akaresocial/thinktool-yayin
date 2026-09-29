@@ -72,6 +72,7 @@ if (is_post()) {
                 'markupPercent' => p_num('markupPercent') ?? 0,
                 'roundTo' => in_array((int) p('roundTo'), [1, 10, 100], true) ? (int) p('roundTo') : 1,
                 'announcement' => ['enabled' => p_bool('announcement_enabled'), 'text' => p_str('announcement_text', 200)],
+                'heroProducts' => array_values(array_unique(array_filter(array_map('intval', [p('hero_1'), p('hero_2'), p('hero_3')])))),
                 'gtmId' => p_str('gtmId', 30),
                 'googleSiteVerification' => p_str('googleSiteVerification', 120),
                 'googleAdsId' => p_str('googleAdsId', 30),
@@ -95,13 +96,17 @@ for ($i = 2; $i <= 12; $i++) {
     $installments[$i] = "$i taksite kadar";
 }
 $mailLog = q_all('SELECT * FROM mail_log ORDER BY id DESC LIMIT 12');
+$heroOptions = ['' => '— Otomatik —'];
+foreach (q_all('SELECT id, title FROM products WHERE published = 1 ORDER BY sort_order, id') as $hp) {
+    $heroOptions[(int) $hp['id']] = $hp['title'];
+}
 $iframeOff = (int) (meta_get('paytr_iframe_unavailable_until') ?? 0) > time();
 
 admin_header('Ayarlar', 'ayarlar');
 ?>
 <div class="page-head"><div><h1>Ayarlar</h1></div></div>
 <nav class="tabs anchors">
-  <a href="#firma">Firma</a><a href="#iletisim">İletişim</a><a href="#bildirim">Bildirimler</a><a href="#odeme">Ödeme</a><a href="#kur">Döviz kuru</a><a href="#pazarlama">Pazarlama</a><a href="#paytr">PayTR</a><a href="#testmail">E-posta</a>
+  <a href="#firma">Firma</a><a href="#iletisim">İletişim</a><a href="#bildirim">Bildirimler</a><a href="#odeme">Ödeme</a><a href="#kur">Döviz kuru</a><a href="#vitrin">Vitrin</a><a href="#pazarlama">Pazarlama</a><a href="#paytr">PayTR</a><a href="#testmail">E-posta</a>
 </nav>
 
 <form method="post" class="stack" data-serialize>
@@ -157,6 +162,16 @@ admin_header('Ayarlar', 'ayarlar');
       <?= field('Yuvarlama', select('roundTo', [1 => '1 TL', 10 => '10 TL', 100 => '100 TL'], $s['roundTo'])) ?>
     </div>
     <p class="muted small">TCMB döviz satış: <?= $s['tcmbForexSelling'] ? e(format_rate((float) $s['tcmbForexSelling'])) : '—' ?> · efektif satış: <?= $s['tcmbBanknoteSelling'] ? e(format_rate((float) $s['tcmbBanknoteSelling'])) : '—' ?> · bülten: <?= e($s['tcmbDate'] ?: '—') ?> · güncelleme: <?= $s['rateUpdatedAt'] ? e(format_date($s['rateUpdatedAt'], true)) : '—' ?>. Kur her gün 10:00'da otomatik güncellenir; hemen güncellemek için Panel sayfasındaki düğmeyi kullanın.</p>
+  </section>
+
+  <section class="card stack" id="vitrin">
+    <header class="card-head"><h2>Ana sayfa vitrini</h2><span class="muted">Ana sayfanın en üstündeki slaytta sırayla gösterilen 3 ürün</span></header>
+    <div class="row">
+      <?php for ($i = 1; $i <= 3; $i++): ?>
+        <?= field("$i. slayt", select("hero_$i", $heroOptions, $s['heroProducts'][$i - 1] ?? '')) ?>
+      <?php endfor; ?>
+    </div>
+    <p class="muted small">Boş bırakılan yerler otomatik doldurulur (Expert 399, Master CV, CE EVD ya da öne çıkan ürünler). Slaytta ürünün ilk görseli, kısa açıklaması ve "Öne çıkan değerler" alanı kullanılır; görselin arka planı otomatik temizlenir.</p>
   </section>
 
   <section class="card stack" id="pazarlama">

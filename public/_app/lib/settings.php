@@ -40,6 +40,8 @@ function settings_defaults(): array
         'tcmbDate' => '',
         'rateUpdatedAt' => '',
         'announcement' => ['enabled' => false, 'text' => ''],
+        // Ana sayfa vitrini (hero slaytı): sırayla en fazla 3 ürün kimliği; boşsa varsayılan seçim
+        'heroProducts' => [],
         'gtmId' => '',
         'googleSiteVerification' => '',
         'googleAdsId' => '',
