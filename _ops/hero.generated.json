@@ -1,0 +1,47 @@
+{
+ "version": 4,
+ "items": {
+  "1": {
+   "key": "a04393c316",
+   "source": "THINKTOOL-Expert-399-t399webp.webp",
+   "files": [
+    "thinktool-expert-399-a04393c316-640.webp",
+    "thinktool-expert-399-a04393c316-1080.webp",
+    "thinktool-expert-399-a04393c316-1343.webp"
+   ],
+   "src": "/hero/thinktool-expert-399-a04393c316-1080.webp",
+   "srcSet": "/hero/thinktool-expert-399-a04393c316-640.webp 640w, /hero/thinktool-expert-399-a04393c316-1080.webp 1080w, /hero/thinktool-expert-399-a04393c316-1343.webp 1343w",
+   "width": 1343,
+   "height": 651,
+   "accent": "#9e1b23"
+  },
+  "11": {
+   "key": "a390a06d17",
+   "source": "THINKTOOL-CE-EVD-3-EEVD3jpg.webp",
+   "files": [
+    "thinktool-ce-evd-elektrikli-arac-a390a06d17-640.webp",
+    "thinktool-ce-evd-elektrikli-arac-a390a06d17-1080.webp",
+    "thinktool-ce-evd-elektrikli-arac-a390a06d17-1343.webp"
+   ],
+   "src": "/hero/thinktool-ce-evd-elektrikli-arac-a390a06d17-1080.webp",
+   "srcSet": "/hero/thinktool-ce-evd-elektrikli-arac-a390a06d17-640.webp 640w, /hero/thinktool-ce-evd-elektrikli-arac-a390a06d17-1080.webp 1080w, /hero/thinktool-ce-evd-elektrikli-arac-a390a06d17-1343.webp 1343w",
+   "width": 1343,
+   "height": 941,
+   "accent": "#1f7a4d"
+  },
+  "12": {
+   "key": "27d001d8f2",
+   "source": "master-cv5-ercv5jpg.webp",
+   "files": [
+    "thinktool-master-cv-27d001d8f2-640.webp",
+    "thinktool-master-cv-27d001d8f2-1080.webp",
+    "thinktool-master-cv-27d001d8f2-1343.webp"
+   ],
+   "src": "/hero/thinktool-master-cv-27d001d8f2-1080.webp",
+   "srcSet": "/hero/thinktool-master-cv-27d001d8f2-640.webp 640w, /hero/thinktool-master-cv-27d001d8f2-1080.webp 1080w, /hero/thinktool-master-cv-27d001d8f2-1343.webp 1343w",
+   "width": 1343,
+   "height": 662,
+   "accent": "#9e1b23"
+  }
+ }
+}
