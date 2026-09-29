@@ -1,5 +1,7 @@
 #!/bin/bash
-# thinktool.com.tr — sunucu tarafı otomatik yayın (Alastyr cPanel, cron ile 2 dakikada bir).
+# thinktool.com.tr — sunucu tarafı otomatik yayın (Alastyr cPanel, cron ile 15 dakikada bir — sunucu daha sık izin vermiyor).
+# Anlık yayın ops/tetik/index.php (https://tetik.thinktool.com.tr/) ile yapılır: aynı adımların saf PHP karşılığı, aynı kilit ve
+# durum dosyaları. İki betik birlikte değişir; önce bash ops/test/deploy-test.sh.
 #
 # Akış: açık yayın deposunun (akaresocial/thinktool-yayin) main dalındaki son commit'i kontrol et → yeni sürüm varsa indir,
 # doğrula → veritabanı şemasını güncelle (ilk kurulumda içeriği yükle) → web kökünün anlık yedeğini al → yer değiştirerek
@@ -16,7 +18,7 @@
 # Uygulamanın zamanlanmış görevleri (günlük kur 10:00, veritabanı yedeği 03:00, temizlik) de buradan 10 dakikada bir çalışır.
 #
 # Kullanım (cPanel → Cron İşleri, tek satır):
-#   */2 * * * * SITE_URL=https://thinktool.com.tr WEBROOT=$HOME/public_html bash $HOME/thinktool-ops/deploy.sh >> $HOME/thinktool-ops/deploy.log 2>&1
+#   */15 * * * * SITE_URL=https://thinktool.com.tr WEBROOT=$HOME/public_html bash $HOME/thinktool-ops/deploy.sh >> $HOME/thinktool-ops/deploy.log 2>&1
 set -u
 umask 022
 
@@ -92,6 +94,8 @@ if grep -qx "$remote_sha" "$OPS/bad_shas" 2>/dev/null; then exit 0; fi
 
 log "yeni sürüm: $remote_sha (canlı: ${current_sha:-yok})"
 rel="$OPS/releases/$remote_sha"
+# yerel deneme (ops/test/deploy-test.sh): yayın GitHub yerine bir klasörden
+if [ ! -d "$rel/public" ] && [ -n "${TEST_RELEASE_DIR:-}" ]; then mkdir -p "$rel" && cp -a "$TEST_RELEASE_DIR/." "$rel/"; fi
 if [ ! -d "$rel/public" ]; then
   rm -rf "$rel.tmp" && mkdir -p "$rel.tmp"
   if ! curl -fsSL --connect-timeout 20 --max-time 300 "https://codeload.github.com/$REPO/tar.gz/$remote_sha" | tar -xz -C "$rel.tmp" --strip-components=1; then
@@ -111,11 +115,14 @@ grep -q "^$rid" "$rel/public/version.txt" 2>/dev/null || fail "version.txt yayı
 nfiles=$(find "$rel/public" -type f | wc -l)
 [ "$nfiles" -ge 100 ] || fail "dosya sayısı çok az ($nfiles)"
 # Betikler yalnızca api/, yonetim/, _app/ altında olabilir.
-bad_exec=$(cd "$rel/public" && find . -type f \( -iname '*.php' -o -iname '*.php[0-9]' -o -iname '*.phtml' -o -iname '*.phar' -o -iname '*.cgi' -o -iname '*.pl' -o -iname '*.py' -o -iname '*.sh' \) \
+bad_exec=$(cd "$rel/public" && find . -type f \( -iname '*.php' -o -iname '*.php[0-9]' -o -iname '*.pht' -o -iname '*.phtml' -o -iname '*.phar' -o -iname '*.cgi' -o -iname '*.pl' -o -iname '*.py' -o -iname '*.sh' -o -iname '*.shtml' \) \
   | grep -vE '^\./(api|yonetim|_app)/' | head -3)
 [ -z "$bad_exec" ] || fail "izin verilmeyen yerde betik: $bad_exec"
 [ -z "$(cd "$rel/public" && find . -type l | head -1)" ] || fail "pakette sembolik bağlantı var"
-if grep -RIEiq '^[[:space:]]*(AddHandler|SetHandler|Action|ScriptAlias|php_value|php_flag|php_admin|AddType[^#]*php)' --include=.htaccess "$rel/public"; then
+# (ops/tetik/index.php → htaccess_tehlikeli() ile aynı kalıplar)
+if grep -RIEiq '^[[:blank:]]*(AddHandler|SetHandler|ForceType[^#]*(php|cgi)|Action|ScriptAlias|php_value|php_flag|php_admin|AddType[^#]*php|(Add|Set)OutputFilter[^#]*INCLUDES)' --include=.htaccess "$rel/public" \
+  || grep -RIEiq '^[[:blank:]]*Options[[:blank:]][^#]*(^|[[:blank:]]|\+)(ExecCGI|Includes)([[:blank:]]|$)' --include=.htaccess "$rel/public" \
+  || grep -RIEiq '^[[:blank:]]*Rewrite(Rule|Cond)[[:blank:]][^#]*\[([^]]*,)?[[:blank:]]*H=' --include=.htaccess "$rel/public"; then
   fail ".htaccess içinde betik çalıştırma yönergesi var"
 fi
 [ -f "$rel/_ops/SHA256SUMS" ] || fail "SHA256SUMS yok"
@@ -264,7 +271,8 @@ rm -rf "$stage"
 touch "$WEBROOT/.htaccess"
 # 3) görseller: web kökündeki "uploads" → ~/thinktool-data/uploads
 if [ ! -e "$WEBROOT/uploads" ] && [ ! -L "$WEBROOT/uploads" ]; then
-  ln -s "$DATA/uploads" "$WEBROOT/uploads" && log "uploads bağlantısı oluşturuldu"
+  # (geri dönüşte kaldırılsın diye .moved-in'e yazılır; installed.txt'ye girmez — korunan ad)
+  ln -s "$DATA/uploads" "$WEBROOT/uploads" && echo uploads >> "$snap/.moved-in" && log "uploads bağlantısı oluşturuldu"
 fi
 log "kuruldu: $remote_sha / $rid ($nfiles dosya; anlık yedek $snap)"
 

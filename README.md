@@ -4,6 +4,7 @@ Bu depo **otomatik oluşturulur** (kaynak ayrı ve özel depodadır). Elle düze
 
 - `public/` — sitenin kendisi: statik sayfalar + PHP sipariş/ödeme/yönetim uçları (sunucuda web köküne kurulur)
 - `_ops/deploy.sh` — sunucuda cron ile çalışan yayın betiği (doğrula → yedekle → kur → canlı test → gerekirse geri dön)
+- `_ops/tetik/` — anlık yayın tetiği (https://tetik.thinktool.com.tr/): aynı adımların saf PHP karşılığı
 - `_ops/urls.txt` — kurulum sonrası canlı test listesi · `_ops/SHA256SUMS` — dosya sağlama toplamları
 - `_ops/enabled` — `1` değilse sunucu kurulum yapmaz
 

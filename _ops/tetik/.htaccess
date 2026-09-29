@@ -1,0 +1,11 @@
+# tetik.thinktool.com.tr — yalnızca index.php (tetik) ve robots.txt açık; başka her şey 403.
+# Sunucuda bu satırlar cPanel'in yazdığı blokların (PHP 8.3 satırı, php ini) ALTINA eklenir; o bloklara dokunmayın.
+Options -Indexes
+DirectoryIndex index.php
+RewriteEngine On
+# LiteSpeed: yanıt gönderildikten sonra yayın arka planda sürer (bağlantı kapanınca PHP durdurulmasın)
+RewriteRule .* - [E=noabort:1,E=noconntimeout:1]
+# SSL doğrulaması (AutoSSL)
+RewriteRule ^\.well-known/ - [L]
+RewriteRule ^(?:index\.php|robots\.txt)?$ - [L]
+RewriteRule ^ - [F]
