@@ -23,8 +23,12 @@ function settings_defaults(): array
         'contactNotificationEmails' => ['info@thinktool.com.tr'],
         'mailFrom' => 'info@thinktool.com.tr',
         'cardEnabled' => true,
-        'cardDescription' => 'Tüm kredi kartlarına taksit imkânı. Ödeme PayTR güvencesiyle alınır.',
-        'maxInstallment' => 0,
+        'cardDescription' => 'Ödeme PayTR güvencesiyle alınır.',
+        // Peşin fiyatına (vade farksız) taksit sayısı: sitede "Peşin fiyatına 3 taksit · 3 × ₺…" olarak gösterilir; 0 = gösterme.
+        // Vade farkını mağazanın üstlenmesi PayTR panelinde (taksit ayarları) yapılır.
+        'cashInstallments' => 3,
+        // Kartla ödemede PayTR'ye gönderilen en fazla taksit (max_installment): 0 = PayTR'deki tüm seçenekler, 1 = tek çekim
+        'installmentLimit' => 0,
         'installmentTableToken' => '',
         'transferEnabled' => true,
         'transferDescription' => 'Siparişinizin ardından IBAN bilgileri gösterilir. Açıklamaya sipariş numaranızı yazın.',

@@ -37,7 +37,8 @@ api_run(function (): void {
         json_out(['ok' => true, 'mode' => 'link', 'url' => $p['linkUrl']]);
     }
 
-    $max = (int) (settings()['maxInstallment'] ?? 0);
+    // en fazla taksit (0 = PayTR'deki tüm seçenekler); peşin fiyatına taksitlerin vade farkı PayTR panelinde ayarlanır
+    $max = max(0, min(12, (int) (settings()['installmentLimit'] ?? 0)));
     $attempt = (int) ($p['attempts'] ?? 0) + 1;
     $oid = merchant_oid_for($no, $attempt);
     order_update($o['id'], ['status' => 'pending_payment', 'paytr' => ['merchantOid' => $oid, 'attempts' => $attempt]], false);

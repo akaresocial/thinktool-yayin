@@ -95,8 +95,8 @@ function db_migrate(PDO $pdo): void
         // Başka bir istek aynı anda yükseltmiş olabilir
         $version = (int) ($pdo->query("SELECT value FROM meta WHERE key = 'schema_version'")->fetchColumn() ?: 0);
         for ($i = $version; $i < count($steps); $i++) {
-            foreach ($steps[$i] as $sql) {
-                $pdo->exec($sql);
+            foreach ($steps[$i] as $step) {
+                is_string($step) ? $pdo->exec($step) : $step($pdo);
             }
         }
         $st = $pdo->prepare("INSERT INTO meta (key, value) VALUES ('schema_version', ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value");
@@ -108,7 +108,7 @@ function db_migrate(PDO $pdo): void
     }
 }
 
-/** Şema adımları. Yalnızca SONA ekleyin; mevcut adımları değiştirmeyin. */
+/** Şema adımları (SQL ya da function (PDO $pdo)). Yalnızca SONA ekleyin; mevcut adımları değiştirmeyin. */
 function db_schema_steps(): array
 {
     return [
@@ -248,6 +248,35 @@ function db_schema_steps(): array
                 error TEXT NOT NULL DEFAULT '',
                 created_at TEXT NOT NULL
             )",
+        ],
+        // 2 — Peşin fiyatına 3 taksit (2026-10): maxInstallment → installmentLimit (aynı değer; 3'ten az olamaz),
+        // cashInstallments = 3; eski kart açıklaması ve duyurudaki "Kredi kartına taksit" metni güncellenir.
+        [
+            static function (PDO $pdo): void {
+                $raw = $pdo->query("SELECT value FROM settings WHERE key = 'site'")->fetchColumn();
+                if ($raw === false) {
+                    return; // ayar kaydı yok: varsayılanlar geçerli
+                }
+                $s = json_decode((string) $raw, true) ?: [];
+                $s['cashInstallments'] ??= 3;
+                $eski = (int) ($s['maxInstallment'] ?? 0);
+                $s['installmentLimit'] ??= $eski === 0 ? 0 : max($eski, 3);
+                unset($s['maxInstallment']);
+                if (($s['cardDescription'] ?? '') === 'Tüm kredi kartlarına taksit imkânı. Ödeme PayTR güvencesiyle alınır.') {
+                    $s['cardDescription'] = 'Ödeme PayTR güvencesiyle alınır.';
+                }
+                if (isset($s['announcement']['text']) && is_string($s['announcement']['text'])) {
+                    $s['announcement']['text'] = (string) preg_replace('/(^|·)\\s*Kredi kartına taksit\\s*(?=·|$)/u', '$1 Kredi kartına peşin fiyatına 3 taksit ', $s['announcement']['text']);
+                    $s['announcement']['text'] = trim((string) preg_replace('/\\s+/u', ' ', $s['announcement']['text']));
+                }
+                $st = $pdo->prepare("UPDATE settings SET value = ? WHERE key = 'site'");
+                $st->execute([json_encode($s, JSON_UNESCAPED_UNICODE)]);
+                // statik site yeniden derlensin
+                $v = (int) ($pdo->query("SELECT value FROM meta WHERE key = 'content_version'")->fetchColumn() ?: 0) + 1;
+                $up = $pdo->prepare('INSERT INTO meta (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value');
+                $up->execute(['content_version', (string) $v]);
+                $up->execute(['content_updated_at', gmdate('Y-m-d\\TH:i:s\\Z')]);
+            },
         ],
     ];
 }

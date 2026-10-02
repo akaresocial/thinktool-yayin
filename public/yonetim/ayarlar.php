@@ -41,6 +41,14 @@ if (is_post()) {
                 'currency' => in_array($b['currency'] ?? 'TRY', ['TRY', 'USD', 'EUR'], true) ? ($b['currency'] ?? 'TRY') : 'TRY',
                 'iban' => strtoupper(preg_replace('/[^A-Za-z0-9 ]/', '', str_in($b['iban'] ?? '', 40)) ?? ''),
             ], p_json('bankAccounts')), fn ($b) => $b['bank'] !== '' && $b['iban'] !== ''));
+            // Taksit: peşin fiyatına taksit sayısı, kartla ödemedeki taksit sınırını aşamaz (sınır gerekirse yükseltilir)
+            $cash = (int) p('cashInstallments');
+            $cash = $cash >= 2 && $cash <= 12 ? $cash : 0;
+            $limit = max(0, min(12, (int) p('installmentLimit')));
+            $raised = $limit > 0 && $limit < $cash;
+            if ($raised) {
+                $limit = $cash;
+            }
             settings_save([
                 'brandName' => p_str('brandName', 80),
                 'legalName' => p_str('legalName', 200),
@@ -60,7 +68,8 @@ if (is_post()) {
                 'mailFrom' => filter_var(p_str('mailFrom', 120), FILTER_VALIDATE_EMAIL) ? p_str('mailFrom', 120) : 'info@thinktool.com.tr',
                 'cardEnabled' => p_bool('cardEnabled'),
                 'cardDescription' => p_str('cardDescription', 300),
-                'maxInstallment' => max(0, min(12, (int) p('maxInstallment'))),
+                'cashInstallments' => $cash,
+                'installmentLimit' => $limit,
                 'installmentTableToken' => p_str('installmentTableToken', 120),
                 'transferEnabled' => p_bool('transferEnabled'),
                 'transferDescription' => p_text('transferDescription', 600),
@@ -80,7 +89,8 @@ if (is_post()) {
                 'defaultTitle' => p_str('defaultTitle', 120),
                 'defaultDescription' => p_str('defaultDescription', 320),
             ]);
-            flash('success', 'Ayarlar kaydedildi. Fiyat/kur değişiklikleri hemen, diğerleri birkaç dakika içinde sitede görünür.');
+            flash('success', 'Ayarlar kaydedildi. Fiyat/kur değişiklikleri hemen, diğerleri birkaç dakika içinde sitede görünür.'
+                . ($raised ? " Taksit sınırı, peşin fiyatına taksit sayısına ($cash) yükseltildi." : ''));
         }
     } catch (UserError $e) {
         flash('error', $e->getMessage());
@@ -91,9 +101,11 @@ if (is_post()) {
 $s = settings(true);
 $pt = paytr_settings();
 $rate = rate_info($s);
-$installments = [0 => 'Tüm taksit seçenekleri', 1 => 'Tek çekim'];
+$installments = [0 => 'PayTR\'deki tüm seçenekler', 1 => 'Tek çekim'];
+$cashOptions = [0 => 'Yok (sitede gösterme)'];
 for ($i = 2; $i <= 12; $i++) {
     $installments[$i] = "$i taksite kadar";
+    $cashOptions[$i] = "$i taksit";
 }
 $mailLog = q_all('SELECT * FROM mail_log ORDER BY id DESC LIMIT 12');
 $heroOptions = ['' => '— Otomatik —'];
@@ -143,7 +155,11 @@ admin_header('Ayarlar', 'ayarlar');
   <section class="card stack" id="odeme">
     <header class="card-head"><h2>Ödeme</h2></header>
     <?= checkbox('cardEnabled', (bool) $s['cardEnabled'], 'Kartla ödeme açık (PayTR)') ?>
-    <div class="row"><?= field('Kart açıklaması', input('cardDescription', $s['cardDescription'])) ?><?= field('Taksit', select('maxInstallment', $installments, $s['maxInstallment'])) ?></div>
+    <div class="row">
+      <?= field('Peşin fiyatına taksit', select('cashInstallments', $cashOptions, $s['cashInstallments']), 'Sitede “Peşin fiyatına 3 taksit · 3 × ₺…” olarak gösterilir. Vade farkını mağazanın üstlenmesi PayTR panelinde (taksit ayarları) yapılır.') ?>
+      <?= field('Kartla ödemede en fazla taksit', select('installmentLimit', $installments, $s['installmentLimit']), 'PayTR ödeme ekranında sunulan en fazla taksit. Peşin fiyatına taksit sayısından az olamaz.') ?>
+    </div>
+    <?= field('Kart açıklaması', input('cardDescription', $s['cardDescription']), 'Ödeme adımında kart seçeneğinin altında görünür (taksit bilgisi ayrıca gösterilir).') ?>
     <?= field('PayTR taksit tablosu token (isteğe bağlı)', input('installmentTableToken', $s['installmentTableToken'])) ?>
     <?= checkbox('transferEnabled', (bool) $s['transferEnabled'], 'Havale/EFT açık') ?>
     <?= field('Havale açıklaması', textarea('transferDescription', $s['transferDescription'], 2)) ?>
@@ -177,7 +193,7 @@ admin_header('Ayarlar', 'ayarlar');
   <section class="card stack" id="pazarlama">
     <header class="card-head"><h2>Pazarlama ve SEO</h2></header>
     <div class="row"><?= checkbox('announcement_enabled', (bool) ($s['announcement']['enabled'] ?? false), 'Duyuru çubuğunu göster') ?></div>
-    <?= field('Duyuru metni', input('announcement_text', $s['announcement']['text'] ?? ''), 'Boşsa kargo/taksit/güncelleme bilgileri gösterilir.') ?>
+    <?= field('Duyuru metni', input('announcement_text', $s['announcement']['text'] ?? ''), 'Boşsa duyuru çubuğu gösterilmez. Metindeki “peşin fiyatına N taksit” ifadesi Ödeme bölümündeki taksit ayarına göre kendiliğinden güncellenir.') ?>
     <div class="row">
       <?= field('Google Tag Manager', input('gtmId', $s['gtmId'], ['placeholder' => 'GTM-XXXXXXX'])) ?>
       <?= field('Google Ads kimliği', input('googleAdsId', $s['googleAdsId'], ['placeholder' => 'AW-XXXXXXXXX'])) ?>
