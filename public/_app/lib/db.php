@@ -278,5 +278,42 @@ function db_schema_steps(): array
                 $up->execute(['content_updated_at', gmdate('Y-m-d\\TH:i:s\\Z')]);
             },
         ],
+        // 3 — Havale/EFT ve iletişim formu kaldırıldı (2026-10): sipariş kartla ya da WhatsApp'tan verilir.
+        // Havale kapatılır; yasal sayfalardaki havale ve iletişim formu ifadeleri (değiştirilmemişlerse) güncellenir.
+        [
+            static function (PDO $pdo): void {
+                $raw = $pdo->query("SELECT value FROM settings WHERE key = 'site'")->fetchColumn();
+                if ($raw !== false) {
+                    $s = json_decode((string) $raw, true) ?: [];
+                    $s['transferEnabled'] = false;
+                    $pdo->prepare("UPDATE settings SET value = ? WHERE key = 'site'")->execute([json_encode($s, JSON_UNESCAPED_UNICODE)]);
+                }
+                $edits = [
+                    'mesafeli-satis-sozlesmesi' => [' Havale/EFT ile ödemede, ödemenin SATICI hesabına geçmesiyle sipariş işleme alınır.' => ''],
+                    'on-bilgilendirme-formu' => ['taksit seçenekleriyle) veya havale/EFT ile yapılabilir.' => 'taksit seçenekleriyle) ile yapılabilir.'],
+                    'teslimat-ve-iade' => ['Kartla ödenen siparişler ödeme onayından, havale/EFT ile ödenen siparişler ödemenin hesabımıza geçmesinden sonra hazırlanır.' => 'Siparişler ödemenin onaylanmasından sonra hazırlanır.'],
+                    'kvkk-aydinlatma-metni' => ['İletişim formu ve telefon/WhatsApp üzerinden iletilen' => 'Telefon ve WhatsApp üzerinden iletilen'],
+                ];
+                $get = $pdo->prepare('SELECT data FROM pages WHERE slug = ?');
+                $put = $pdo->prepare('UPDATE pages SET data = ?, updated_at = ? WHERE slug = ?');
+                foreach ($edits as $slug => $map) {
+                    $get->execute([$slug]);
+                    $data = json_decode((string) ($get->fetchColumn() ?: ''), true);
+                    if (!is_array($data) || !is_string($data['contentHtml'] ?? null)) {
+                        continue;
+                    }
+                    $html = strtr($data['contentHtml'], $map);
+                    if ($html !== $data['contentHtml']) {
+                        $data['contentHtml'] = $html;
+                        $put->execute([json_encode($data, JSON_UNESCAPED_UNICODE), gmdate('Y-m-d\\TH:i:s\\Z'), $slug]);
+                    }
+                }
+                // statik site yeniden derlensin
+                $v = (int) ($pdo->query("SELECT value FROM meta WHERE key = 'content_version'")->fetchColumn() ?: 0) + 1;
+                $up = $pdo->prepare('INSERT INTO meta (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value');
+                $up->execute(['content_version', (string) $v]);
+                $up->execute(['content_updated_at', gmdate('Y-m-d\\TH:i:s\\Z')]);
+            },
+        ],
     ];
 }

@@ -193,16 +193,3 @@ function render_order_email(string $variant, array $o, array $s, string $note = 
     }
     throw new InvalidArgumentException("Bilinmeyen e-posta türü: $variant");
 }
-
-/** İletişim formu bildirimi (yönetici). */
-function render_contact_email(array $m): array
-{
-    $subject = 'İletişim formu: ' . ($m['subject'] ?: 'Mesaj') . ' — ' . $m['name'];
-    $row = fn (string $label, string $value) => $value === '' ? '' : '<tr><td style="padding:8px 0;border-bottom:1px solid ' . MAIL_LINE . ';font-size:13px;color:' . MAIL_MUTED . ';width:120px;vertical-align:top;">' . e($label) . '</td><td style="padding:8px 0;border-bottom:1px solid ' . MAIL_LINE . ';font-size:14px;">' . e($value) . '</td></tr>';
-    $body = '<h1 style="margin:0 0 6px;font-size:20px;">Yeni iletişim mesajı</h1>'
-        . '<p style="margin:0 0 16px;color:' . MAIL_MUTED . ';font-size:14px;">' . e($m['subject']) . ' · ' . format_date($m['created_at'], true) . '</p>'
-        . '<table role="presentation" width="100%" cellpadding="0" cellspacing="0">' . $row('Ad soyad', $m['name']) . $row('Telefon', $m['phone']) . $row('E-posta', $m['email']) . $row('İlgili ürün', $m['product']) . '</table>'
-        . '<div style="margin-top:16px;padding:14px 16px;background:#faf9f6;border-radius:12px;font-size:14px;line-height:22px;white-space:pre-wrap;">' . e($m['message']) . '</div>'
-        . '<div style="margin-top:22px;">' . mail_button(site_url('/yonetim/mesajlar.php'), 'Panelde aç') . '</div>';
-    return [$subject, mail_layout(mb_substr($m['message'], 0, 120), $subject, $body, 'Bu e-posta thinktool.com.tr iletişim formundan gönderildi.')];
-}

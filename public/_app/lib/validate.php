@@ -88,39 +88,3 @@ function validate_checkout(array $in): array
     }
     return [$d, $e];
 }
-
-const CONTACT_SUBJECTS = ['Ürünler hakkında bilgi', 'Ürün siparişi', 'Yazılım desteği', 'Yedek parça', 'Opsiyonel parça tedariği', 'Diğer'];
-
-function validate_contact(array $in): array
-{
-    $e = [];
-    $d = [
-        'name' => str_in($in['name'] ?? '', 80),
-        'phone' => str_in($in['phone'] ?? '', 24),
-        'email' => mb_strtolower(str_in($in['email'] ?? '', 120)),
-        'subject' => str_in($in['subject'] ?? '', 60),
-        'product' => str_in($in['product'] ?? '', 120),
-        'message' => str_in($in['message'] ?? '', 3000),
-        'consent' => ($in['consent'] ?? false) === true,
-        'website' => str_in($in['website'] ?? '', 200),
-    ];
-    if (mb_strlen($d['name']) < 3) {
-        $e['name'] = 'Adınızı ve soyadınızı girin';
-    }
-    if (!preg_match(PHONE_PATTERN, $d['phone'])) {
-        $e['phone'] = 'Geçerli bir telefon numarası girin';
-    }
-    if ($d['email'] !== '' && !filter_var($d['email'], FILTER_VALIDATE_EMAIL)) {
-        $e['email'] = 'Geçerli bir e-posta adresi girin';
-    }
-    if (!in_array($d['subject'], CONTACT_SUBJECTS, true)) {
-        $e['subject'] = 'Bir konu seçin';
-    }
-    if (mb_strlen($d['message']) < 10) {
-        $e['message'] = 'Mesajınız en az 10 karakter olmalı';
-    }
-    if (!$d['consent']) {
-        $e['consent'] = 'Aydınlatma metnini onaylamanız gerekiyor';
-    }
-    return [$d, $e];
-}
