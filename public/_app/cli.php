@@ -9,6 +9,7 @@ declare(strict_types=1);
  *   php _app/cli.php rate --force    (kuru hemen güncelle)
  *   php _app/cli.php backup
  *   php _app/cli.php allow-setup     (ilk yönetici kurulum ekranını 2 saatliğine aç)
+ *   php _app/cli.php sifre-sifirla [--email=…]   (yönetici şifresi için 30 dakikalık sıfırlama bağlantısı yazar)
  *   php _app/cli.php status
  */
 if (PHP_SAPI !== 'cli') {
@@ -66,6 +67,22 @@ try {
             $out('İlk yönetici kurulumu 2 saatliğine açıldı.');
             break;
 
+        case 'sifre-sifirla':
+            // E-postaya erişilemiyorsa: bağlantı burada yazılır, yeni şifreyi kişi tarayıcıda kendisi belirler
+            $users = q_all('SELECT * FROM users ORDER BY id');
+            $email = is_string($opt['email'] ?? null) ? mb_strtolower($opt['email']) : '';
+            $user = $email !== '' ? (array_values(array_filter($users, fn ($u) => $u['email'] === $email))[0] ?? null) : (count($users) === 1 ? $users[0] : null);
+            if (!$users) {
+                $out('Yönetici hesabı yok; önce: php _app/cli.php allow-setup');
+            } elseif (!$user) {
+                $out('Yönetici hesapları: ' . implode(', ', array_column($users, 'email')));
+                $out('Hangisi için: php _app/cli.php sifre-sifirla --email=<e-posta>');
+            } else {
+                $out("Şifre sıfırlama bağlantısı ({$user['email']}; 30 dakika geçerli, tek kullanımlık):");
+                fwrite(STDOUT, admin_reset_link($user) . "\n");
+            }
+            break;
+
         case 'status':
             $out(json_encode([
                 'schema' => meta_get('schema_version'),
@@ -78,7 +95,7 @@ try {
             break;
 
         default:
-            $out('Komutlar: install, cron, rate [--force], backup, allow-setup, status');
+            $out('Komutlar: install, cron, rate [--force], backup, allow-setup, sifre-sifirla [--email=…], status');
     }
 } catch (Throwable $e) {
     log_app('CLI hatası (' . $cmd . '): ' . $e->getMessage(), 'error');

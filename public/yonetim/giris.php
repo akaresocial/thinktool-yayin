@@ -46,6 +46,7 @@ admin_header('Giriş');
     <?= field('Şifre', input('password', '', ['type' => 'password', 'autocomplete' => 'current-password', 'required' => true])) ?>
     <button class="btn btn-primary btn-block" type="submit">Giriş yap</button>
   </form>
+  <a class="muted small" href="/yonetim/sifre.php">Şifremi unuttum</a>
 </div>
 <?php
 admin_footer();

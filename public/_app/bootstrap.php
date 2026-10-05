@@ -57,6 +57,6 @@ if (!is_file(DATA_DIR . '/.htaccess')) {
 }
 ini_set('error_log', DATA_DIR . '/logs/php-error.log');
 
-foreach (['util', 'db', 'settings', 'catalog', 'content', 'orders', 'mail', 'paytr', 'rate', 'validate', 'images'] as $lib) {
+foreach (['util', 'db', 'settings', 'catalog', 'content', 'orders', 'mail', 'paytr', 'rate', 'validate', 'images', 'auth'] as $lib) {
     require APP_DIR . "/lib/$lib.php";
 }
