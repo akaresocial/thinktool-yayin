@@ -315,5 +315,22 @@ function db_schema_steps(): array
                 $up->execute(['content_updated_at', gmdate('Y-m-d\\TH:i:s\\Z')]);
             },
         ],
+        // 4 — Tüm ürünlere %2 zam (2026-10-05): USD fiyatı (ve varsa üstü çizili fiyat) 1,02 ile çarpılır, sente yuvarlanır.
+        // Verilmiş siparişlerin fiyatları değişmez.
+        [
+            static function (PDO $pdo): void {
+                $now = gmdate('Y-m-d\\TH:i:s\\Z');
+                $st = $pdo->prepare('UPDATE products SET price_usd = ROUND(price_usd * 1.02, 2), compare_at_usd = ROUND(compare_at_usd * 1.02, 2), updated_at = ?');
+                $st->execute([$now]);
+                if ($st->rowCount() === 0) {
+                    return; // yeni kurulum: ürün yok
+                }
+                // statik site yeniden derlensin
+                $v = (int) ($pdo->query("SELECT value FROM meta WHERE key = 'content_version'")->fetchColumn() ?: 0) + 1;
+                $up = $pdo->prepare('INSERT INTO meta (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value');
+                $up->execute(['content_version', (string) $v]);
+                $up->execute(['content_updated_at', $now]);
+            },
+        ],
     ];
 }
