@@ -329,6 +329,9 @@ function order_notifications(array $order, ?string $prev): void
     $plan = [];
     if ($prev === null && $status === 'awaiting_transfer') {
         $plan = ['admin' => 'admin-new-order', 'customer' => 'customer-transfer'];
+    } elseif ($prev === null && $status === 'pending_payment') {
+        // Kart siparişi de oluşturulur oluşturulmaz yöneticiye bildirilir; ödeme gelince ayrıca "Ödeme alındı" gider.
+        $plan = ['admin' => 'admin-new-order'];
     } elseif ($status === 'paid' && $prev !== 'paid') {
         $plan = $order['paymentMethod'] === 'card'
             ? ['admin' => 'admin-paid', 'customer' => 'customer-paid']

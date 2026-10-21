@@ -224,7 +224,6 @@ function status_pill(string $status): string
 function admin_header(string $title, string $active = '', array $opts = []): void
 {
     $u = admin_user();
-    $newMessages = $u ? (int) q_val("SELECT COUNT(*) FROM contact_messages WHERE status = 'new'") : 0;
     $pendingOrders = $u ? (int) q_val("SELECT COUNT(*) FROM orders WHERE status IN ('awaiting_transfer','paid')") : 0;
     $nav = [
         'panel' => ['/yonetim/', 'Panel', ''],
@@ -234,7 +233,6 @@ function admin_header(string $title, string $active = '', array $opts = []): voi
         'yazilar' => ['/yonetim/yazilar.php', 'Blog', ''],
         'sayfalar' => ['/yonetim/sayfalar.php', 'Sayfalar', ''],
         'medya' => ['/yonetim/medya.php', 'Medya', ''],
-        'mesajlar' => ['/yonetim/mesajlar.php', 'Mesajlar', $newMessages ? (string) $newMessages : ''],
         'ayarlar' => ['/yonetim/ayarlar.php', 'Ayarlar', ''],
         'kullanicilar' => ['/yonetim/kullanicilar.php', 'Kullanıcılar', ''],
         'yayin' => ['/yonetim/yayin.php', 'Yayın durumu', ''],

@@ -64,7 +64,6 @@ if (is_post()) {
                 'mapsUrl' => p_str('mapsUrl', 300),
                 'social' => ['instagram' => p_str('social_instagram', 200), 'youtube' => p_str('social_youtube', 200), 'facebook' => p_str('social_facebook', 200), 'linkedin' => p_str('social_linkedin', 200)],
                 'orderNotificationEmails' => $emails('orderNotificationEmails'),
-                'contactNotificationEmails' => $emails('contactNotificationEmails'),
                 'mailFrom' => filter_var(p_str('mailFrom', 120), FILTER_VALIDATE_EMAIL) ? p_str('mailFrom', 120) : 'info@thinktool.com.tr',
                 'cardEnabled' => p_bool('cardEnabled'),
                 'cardDescription' => p_str('cardDescription', 300),
@@ -148,7 +147,6 @@ admin_header('Ayarlar', 'ayarlar');
   <section class="card stack" id="bildirim">
     <header class="card-head"><h2>E-posta bildirimleri</h2></header>
     <?= field('Sipariş bildirimleri gidecek adresler', textarea('orderNotificationEmails', implode("\n", $s['orderNotificationEmails']), 3), 'Her satıra bir adres. Her yeni sipariş ve kartla ödeme bu adreslere gider.') ?>
-    <?= field('İletişim formu mesajları gidecek adresler', textarea('contactNotificationEmails', implode("\n", $s['contactNotificationEmails']), 2)) ?>
     <?= field('Gönderen adres', input('mailFrom', $s['mailFrom'], ['type' => 'email']), 'Hostingde tanımlı bir e-posta hesabı olmalı (ör. info@thinktool.com.tr).') ?>
   </section>
 

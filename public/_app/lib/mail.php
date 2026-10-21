@@ -143,9 +143,10 @@ function render_order_email(string $variant, array $o, array $s, string $note = 
         case 'admin-new-order':
         case 'admin-paid':
             $paid = $variant === 'admin-paid';
-            $subject = $paid ? "Ödeme alındı $no — $total ({$o['customerName']})" : "Yeni sipariş $no — $total · Havale bekleniyor ({$o['customerName']})";
+            $card = $o['paymentMethod'] === 'card';
+            $subject = $paid ? "Ödeme alındı $no — $total ({$o['customerName']})" : "Yeni sipariş $no — $total · " . ($card ? 'Kartla ödeme bekleniyor' : 'Havale bekleniyor') . " ({$o['customerName']})";
             $inst = (int) ($o['paytr']['installmentCount'] ?? 0);
-            $body = '<h1 style="margin:0 0 6px;font-size:20px;">' . ($paid ? 'Kartla ödeme alındı' : 'Yeni havale/EFT siparişi') . '</h1>'
+            $body = '<h1 style="margin:0 0 6px;font-size:20px;">' . ($paid ? 'Kartla ödeme alındı' : ($card ? 'Yeni sipariş — kartla ödeme bekleniyor' : 'Yeni havale/EFT siparişi')) . '</h1>'
                 . '<p style="margin:0;' . $muted . 'font-size:14px;">Sipariş ' . $no . ' · ' . format_date($o['createdAt'], true) . ' · ' . e(payment_label($o['paymentMethod'])) . ($inst > 1 ? " · $inst taksit" : '') . '</p>'
                 . mail_items_table($o) . mail_address_block($o)
                 . ($o['customerNote'] ? '<div style="margin-top:16px;padding:12px 14px;background:#faf9f6;border-radius:10px;font-size:13px;"><strong>Müşteri notu:</strong> ' . e($o['customerNote']) . '</div>' : '')

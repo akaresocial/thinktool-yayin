@@ -28,7 +28,6 @@ $stats = [
 $recent = q_all('SELECT id, order_number, first_name, last_name, total_try, status, payment_method, created_at FROM orders ORDER BY id DESC LIMIT 8');
 $s = settings();
 $rate = rate_info($s);
-$messages = (int) q_val("SELECT COUNT(*) FROM contact_messages WHERE status = 'new'");
 $outOfStock = (int) q_val("SELECT COUNT(*) FROM products WHERE stock_status = 'out_of_stock' AND published = 1");
 
 admin_header('Panel', 'panel');
@@ -84,7 +83,6 @@ $first = explode(' ', $user['name'])[0];
     <section class="card">
       <header class="card-head"><h2>Hızlı bakış</h2></header>
       <ul class="quick">
-        <li><a href="/yonetim/mesajlar.php">Yeni iletişim mesajı</a><b><?= $messages ?></b></li>
         <li><a href="/yonetim/urunler.php">Stokta olmayan ürün</a><b><?= $outOfStock ?></b></li>
         <li><a href="/yonetim/yayin.php">Yayın durumu</a><b>→</b></li>
       </ul>
