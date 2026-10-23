@@ -211,7 +211,8 @@ function order_create(array $input, array $cart): array
 /** Sipariş oluşturulduktan sonra (işlem dışında) stok ve e-posta etkileri. */
 function order_after_create(array $order): void
 {
-    order_effects($order, null);
+    stock_sync($order, null);
+    order_notifications_safe($order, null);
 }
 
 /* ───────────────────────── Güncelleme ───────────────────────── */
@@ -272,7 +273,7 @@ function order_update(int $id, array $patch, bool $effects = true, string $actor
             if ($effects) {
                 // Stok aynı işlemde; e-postalar işlem bittikten sonra gönderilir.
                 stock_sync($after, $before['status']);
-                register_shutdown_function(fn () => order_notifications($after, $before['status']));
+                register_shutdown_function(fn () => order_notifications_safe($after, $before['status']));
             }
         }
         return $after;
@@ -287,13 +288,6 @@ function order_append_note(int $id, string $note): void
     }
     $line = '[' . date('d.m.Y H:i') . '] ' . $note;
     q('UPDATE orders SET admin_note = ?, updated_at = ? WHERE id = ?', [trim($o['adminNote'] . "\n" . $line), now_iso(), $id]);
-}
-
-/** Durum geçişinin yan etkileri: stok ve e-postalar. */
-function order_effects(array $order, ?string $prevStatus): void
-{
-    stock_sync($order, $prevStatus);
-    order_notifications($order, $prevStatus);
 }
 
 /**
@@ -319,6 +313,23 @@ function stock_sync(array $order, ?string $prevStatus): void
         $qty = max(0, (int) $p['stock_quantity'] + $direction * $item['quantity']);
         $status = $qty === 0 ? 'out_of_stock' : ($p['stock_status'] === 'out_of_stock' && $direction > 0 ? 'in_stock' : $p['stock_status']);
         q('UPDATE products SET stock_quantity = ?, stock_status = ?, updated_at = ? WHERE id = ?', [$qty, $status, now_iso(), $item['productId']]);
+    }
+}
+
+/**
+ * E-posta hatası siparişi ya da PayTR bildirimini asla düşürmez: müşteri "Beklenmeyen bir hata" görüp
+ * aynı siparişi tekrar tekrar vermesin. Hata günlüğe ve sipariş geçmişine yazılır.
+ */
+function order_notifications_safe(array $order, ?string $prev): void
+{
+    try {
+        order_notifications($order, $prev);
+    } catch (Throwable $e) {
+        log_app("Sipariş #{$order['orderNumber']} e-postaları gönderilemedi: " . get_class($e) . ': ' . $e->getMessage(), 'mail');
+        try {
+            order_event($order['id'], 'mail', 'E-posta GÖNDERİLEMEDİ: ' . $e->getMessage());
+        } catch (Throwable) {
+        }
     }
 }
 

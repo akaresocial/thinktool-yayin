@@ -23,6 +23,10 @@ function send_mail(array $to, string $subject, string $html, array $opts = []): 
         $file = DATA_DIR . '/mails/' . date('Ymd-His') . '-' . substr(slugify($subject), 0, 60) . '-' . bin2hex(random_bytes(2)) . '.html';
         file_put_contents($file, "<!-- To: " . e(implode(', ', $to)) . " | Subject: " . e($subject) . " -->\n" . $html);
         $status = 'preview';
+    } elseif (!function_exists('mail')) {
+        // Hosting mail()'i kapatırsa çağrı ölümcül hata verir; sipariş ve ödeme akışı bundan etkilenmemeli.
+        $status = 'failed';
+        $error = 'PHP mail() bu sunucuda kapalı (disable_functions)';
     } else {
         $boundary = 'tt-' . bin2hex(random_bytes(12));
         $text = mail_text_version($html);
