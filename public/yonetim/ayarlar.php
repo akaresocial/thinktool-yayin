@@ -27,6 +27,20 @@ if (is_post()) {
             paytr_settings_save($patch);
             meta_set('paytr_iframe_unavailable_until', '0');
             flash('success', 'PayTR bilgileri kaydedildi.');
+        } elseif ($action === 'smtp') {
+            $patch = [
+                'host' => p_str('smtpHost', 120) ?: 'mail.thinktool.com.tr',
+                'port' => in_array((int) p('smtpPort'), [465, 587, 25], true) ? (int) p('smtpPort') : 465,
+                'user' => p_str('smtpUser', 120),
+            ];
+            // Şifre sayfada hiçbir zaman gösterilmez; yalnızca yeni değer girildiğinde değişir.
+            if (p_bool('smtpOff')) {
+                $patch['pass'] = '';
+            } elseif (p_str('smtpPass', 200) !== '') {
+                $patch['pass'] = p_str('smtpPass', 200);
+            }
+            smtp_settings_save($patch);
+            flash('success', smtp_settings()['pass'] !== '' ? 'SMTP bilgileri kaydedildi. Aşağıdan deneme e-postası gönderin.' : 'SMTP kapatıldı; e-postalar sunucunun posta sistemiyle (mail) gönderilir.');
         } elseif ($action === 'testmail') {
             $to = p_str('to', 120);
             if (!filter_var($to, FILTER_VALIDATE_EMAIL)) {
@@ -99,6 +113,7 @@ if (is_post()) {
 
 $s = settings(true);
 $pt = paytr_settings();
+$smtp = smtp_settings();
 $rate = rate_info($s);
 $installments = [0 => 'PayTR\'deki tüm seçenekler', 1 => 'Tek çekim'];
 $cashOptions = [0 => 'Yok (sitede gösterme)'];
@@ -117,7 +132,7 @@ admin_header('Ayarlar', 'ayarlar');
 ?>
 <div class="page-head"><div><h1>Ayarlar</h1></div></div>
 <nav class="tabs anchors">
-  <a href="#firma">Firma</a><a href="#iletisim">İletişim</a><a href="#bildirim">Bildirimler</a><a href="#odeme">Ödeme</a><a href="#kur">Döviz kuru</a><a href="#vitrin">Vitrin</a><a href="#pazarlama">Pazarlama</a><a href="#paytr">PayTR</a><a href="#testmail">E-posta</a>
+  <a href="#firma">Firma</a><a href="#iletisim">İletişim</a><a href="#bildirim">Bildirimler</a><a href="#odeme">Ödeme</a><a href="#kur">Döviz kuru</a><a href="#vitrin">Vitrin</a><a href="#pazarlama">Pazarlama</a><a href="#paytr">PayTR</a><a href="#smtp">E-posta</a>
 </nav>
 
 <form method="post" class="stack" data-serialize>
@@ -221,6 +236,23 @@ admin_header('Ayarlar', 'ayarlar');
   </div>
   <p class="muted small">Bildirim URL'si: <code><?= e(site_url('/api/paytr/callback.php')) ?></code> — PayTR panelindeki eski adres de çalışmaya devam eder.</p>
   <button class="btn btn-secondary" type="submit">PayTR bilgilerini kaydet</button>
+</form>
+
+<form method="post" class="card stack" id="smtp" autocomplete="off">
+  <?= csrf_field() ?><input type="hidden" name="action" value="smtp">
+  <header class="card-head"><h2>E-posta gönderim yolu (SMTP)</h2>
+    <span class="muted small"><?= $smtp['pass'] !== '' ? '✓ SMTP açık: e-postalar ' . e($smtp['user']) . ' posta kutusundan gider' : (function_exists('mail') ? 'SMTP kapalı: sunucunun posta sistemi (mail) kullanılıyor' : '⚠ Sunucuda mail() kapalı: SMTP şifresi girilmezse e-posta GİTMEZ') ?></span></header>
+  <p class="muted small">cPanel'deki bir posta kutusunun bilgileri (cPanel › E-posta Hesapları). Şifre girilince sipariş ve ödeme e-postaları bu kutudan SMTP ile gönderilir. Şifre bu sayfada asla gösterilmez; değiştirmek için yeni değeri girin.</p>
+  <div class="row">
+    <?= field('SMTP sunucusu', input('smtpHost', $smtp['host'])) ?>
+    <?= field('Port', select('smtpPort', ['465' => '465 (SSL, önerilen)', '587' => '587 (STARTTLS)'], (string) $smtp['port'])) ?>
+  </div>
+  <div class="row">
+    <?= field('Kullanıcı (e-posta adresi)', input('smtpUser', $smtp['user'], ['type' => 'email'])) ?>
+    <?= field('Posta kutusu şifresi', input('smtpPass', '', ['type' => 'password', 'placeholder' => $smtp['pass'] !== '' ? '•••••••• (değiştirmek için yazın)' : '', 'autocomplete' => 'new-password'])) ?>
+  </div>
+  <?php if ($smtp['pass'] !== ''): ?><?= checkbox('smtpOff', false, 'SMTP\'yi kapat (şifreyi sil, sunucunun posta sistemine dön)') ?><?php endif; ?>
+  <button class="btn btn-secondary" type="submit">SMTP bilgilerini kaydet</button>
 </form>
 
 <form method="post" class="card stack" id="testmail">

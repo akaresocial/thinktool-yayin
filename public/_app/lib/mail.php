@@ -3,8 +3,9 @@
 declare(strict_types=1);
 
 /**
- * E-posta gönderimi. Sunucudaki posta sistemi (PHP mail) kullanılır: şifre gerekmez, alan adının
- * SPF/DKIM kayıtları hostingde tanımlı olduğundan gelen kutusuna düşme oranı yüksektir.
+ * E-posta gönderimi. Panelde SMTP şifresi girilmişse posta kutusundan SMTP ile (curl), girilmemişse
+ * sunucudaki posta sistemiyle (PHP mail) gönderilir. Alan adının SPF/DKIM kayıtları hostingde tanımlı
+ * olduğundan iki yolda da gelen kutusuna düşme oranı yüksektir.
  * Yerel geliştirmede (TT_ENV=development) e-postalar DATA_DIR/mails klasörüne HTML olarak yazılır.
  */
 function send_mail(array $to, string $subject, string $html, array $opts = []): bool
@@ -16,33 +17,47 @@ function send_mail(array $to, string $subject, string $html, array $opts = []): 
     $s = settings();
     $from = filter_var($s['mailFrom'] ?? '', FILTER_VALIDATE_EMAIL) ? $s['mailFrom'] : 'info@thinktool.com.tr';
     $fromName = $s['brandName'] ?: 'Thinktool Türkiye';
+    $smtp = smtp_settings();
     $status = 'sent';
     $error = '';
+
+    $boundary = 'tt-' . bin2hex(random_bytes(12));
+    $headers = [
+        'MIME-Version: 1.0',
+        'From: ' . mb_encode_mimeheader($fromName, 'UTF-8', 'B') . " <$from>",
+        'Reply-To: ' . (filter_var($opts['replyTo'] ?? '', FILTER_VALIDATE_EMAIL) ? $opts['replyTo'] : $from),
+        "Content-Type: multipart/alternative; boundary=\"$boundary\"",
+        'X-Mailer: thinktool.com.tr',
+    ];
+    $body = "--$boundary\r\nContent-Type: text/plain; charset=UTF-8\r\nContent-Transfer-Encoding: base64\r\n\r\n"
+        . chunk_split(base64_encode(mail_text_version($html)))
+        . "--$boundary\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Transfer-Encoding: base64\r\n\r\n"
+        . chunk_split(base64_encode($html))
+        . "--$boundary--\r\n";
+    $encodedSubject = mb_encode_mimeheader($subject, 'UTF-8', 'B');
 
     if (APP_ENV === 'development' || is_file(DATA_DIR . '/mail-preview')) {
         $file = DATA_DIR . '/mails/' . date('Ymd-His') . '-' . substr(slugify($subject), 0, 60) . '-' . bin2hex(random_bytes(2)) . '.html';
         file_put_contents($file, "<!-- To: " . e(implode(', ', $to)) . " | Subject: " . e($subject) . " -->\n" . $html);
         $status = 'preview';
+    } elseif ($smtp['pass'] !== '') {
+        $message = implode("\r\n", array_merge([
+            'Date: ' . date('r'),
+            'To: ' . implode(', ', $to),
+            "Subject: $encodedSubject",
+            'Message-ID: <' . bin2hex(random_bytes(10)) . '@' . substr(strrchr($from, '@'), 1) . '>',
+        ], $headers)) . "\r\n\r\n" . $body;
+        $error = smtp_send($smtp, $to, $message);
+        if ($error !== '') {
+            $status = 'failed';
+            $error = "SMTP: $error";
+        }
     } elseif (!function_exists('mail')) {
         // Hosting mail()'i kapatırsa çağrı ölümcül hata verir; sipariş ve ödeme akışı bundan etkilenmemeli.
         $status = 'failed';
-        $error = 'PHP mail() bu sunucuda kapalı (disable_functions)';
+        $error = 'PHP mail() bu sunucuda kapalı (disable_functions) — panelde SMTP şifresini girin';
     } else {
-        $boundary = 'tt-' . bin2hex(random_bytes(12));
-        $text = mail_text_version($html);
-        $headers = [
-            'MIME-Version: 1.0',
-            'From: ' . mb_encode_mimeheader($fromName, 'UTF-8', 'B') . " <$from>",
-            'Reply-To: ' . (filter_var($opts['replyTo'] ?? '', FILTER_VALIDATE_EMAIL) ? $opts['replyTo'] : $from),
-            "Content-Type: multipart/alternative; boundary=\"$boundary\"",
-            'X-Mailer: thinktool.com.tr',
-        ];
-        $body = "--$boundary\r\nContent-Type: text/plain; charset=UTF-8\r\nContent-Transfer-Encoding: base64\r\n\r\n"
-            . chunk_split(base64_encode($text))
-            . "--$boundary\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Transfer-Encoding: base64\r\n\r\n"
-            . chunk_split(base64_encode($html))
-            . "--$boundary--\r\n";
-        $ok = @mail(implode(', ', $to), mb_encode_mimeheader($subject, 'UTF-8', 'B'), $body, implode("\r\n", $headers), '-f' . $from);
+        $ok = @mail(implode(', ', $to), $encodedSubject, $body, implode("\r\n", $headers), '-f' . $from);
         if (!$ok) {
             $status = 'failed';
             $error = (string) (error_get_last()['message'] ?? 'mail() başarısız');
@@ -53,6 +68,33 @@ function send_mail(array $to, string $subject, string $html, array $opts = []): 
         log_app("E-posta gönderilemedi: $subject → " . implode(', ', $to) . " ($error)", 'mail');
     }
     return $status !== 'failed';
+}
+
+/** Hazır iletiyi SMTP ile gönderir (465: SSL, diğer portlar: STARTTLS). Başarılıysa '' döner, değilse hata metni. */
+function smtp_send(array $c, array $to, string $message): string
+{
+    $in = fopen('php://memory', 'r+');
+    fwrite($in, $message);
+    rewind($in);
+    $port = (int) $c['port'];
+    $ch = curl_init(($port === 465 ? 'smtps://' : 'smtp://') . $c['host'] . ':' . $port);
+    curl_setopt_array($ch, [
+        CURLOPT_USERNAME => $c['user'],
+        CURLOPT_PASSWORD => $c['pass'],
+        CURLOPT_MAIL_FROM => '<' . $c['user'] . '>',
+        CURLOPT_MAIL_RCPT => array_map(fn ($a) => "<$a>", $to),
+        // yerel deneme sunucusu (localhost) TLS'siz olabilir; gerçek sunucuda şifreleme zorunlu
+        CURLOPT_USE_SSL => in_array($c['host'], ['localhost', '127.0.0.1'], true) ? CURLUSESSL_TRY : CURLUSESSL_ALL,
+        CURLOPT_UPLOAD => true,
+        CURLOPT_INFILE => $in,
+        CURLOPT_INFILESIZE => strlen($message),
+        CURLOPT_CONNECTTIMEOUT => 10,
+        CURLOPT_TIMEOUT => 25,
+    ]);
+    curl_exec($ch);
+    $error = curl_errno($ch) ? curl_error($ch) : '';
+    fclose($in);
+    return $error;
 }
 
 function mail_text_version(string $html): string

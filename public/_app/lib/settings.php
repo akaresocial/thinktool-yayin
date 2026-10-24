@@ -111,3 +111,22 @@ function paytr_settings_save(array $patch): void
     $next = array_replace(paytr_settings(), $patch);
     q("INSERT INTO settings (key, value) VALUES ('paytr', ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value", [json_encode($next, JSON_UNESCAPED_UNICODE)]);
 }
+
+/** SMTP ile gönderim (isteğe bağlı): şifre girilmişse e-postalar mail() yerine bu posta kutusundan gider. Yalnızca veritabanında saklanır. */
+function smtp_settings(): array
+{
+    $raw = q_val("SELECT value FROM settings WHERE key = 'smtp'");
+    $saved = $raw ? (json_decode((string) $raw, true) ?: []) : [];
+    return array_replace([
+        'host' => 'mail.thinktool.com.tr',
+        'port' => 465,
+        'user' => 'info@thinktool.com.tr',
+        'pass' => '',
+    ], $saved);
+}
+
+function smtp_settings_save(array $patch): void
+{
+    $next = array_replace(smtp_settings(), $patch);
+    q("INSERT INTO settings (key, value) VALUES ('smtp', ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value", [json_encode($next, JSON_UNESCAPED_UNICODE)]);
+}
