@@ -1,1 +1,1 @@
-1b447def525c kaynak=f2adc81bff29 icerik=75 2026-11-06T11:30:52.012Z
+95df997d6462 kaynak=f2adc81bff29 icerik=76 2026-11-07T09:46:04.777Z
