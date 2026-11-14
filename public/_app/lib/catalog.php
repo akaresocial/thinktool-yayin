@@ -22,6 +22,8 @@ const CAPABILITIES = [
     'tpms' => 'TPMS (lastik basıncı)',
     'uzaktan-destek' => 'Uzaktan teknik destek',
     'ev-batarya' => 'EV batarya teşhisi',
+    'batarya-bakim' => 'Batarya şarj, deşarj ve dengeleme',
+    'gorsel-muayene' => 'Görsel muayene (video endoskop)',
 ];
 
 const STOCK_STATUSES = [

@@ -332,5 +332,108 @@ function db_schema_steps(): array
                 $up->execute(['content_updated_at', $now]);
             },
         ],
+        // 5 — Yeni ürünler (2026-11): Thinktool CE EVP902, CE EVP802, TES402 ve "Atölye Ekipmanları" kategorisi;
+        // CE EVD satış fiyatı 4.200 USD, açıklaması ve SSS'si yenilenir. İçerik ve görseller: _app/icerik/2026-11-yeni-urunler/
+        [
+            static function (PDO $pdo): void {
+                db_icerik_uygula($pdo, __DIR__ . '/../icerik/2026-11-yeni-urunler');
+            },
+        ],
     ];
+}
+
+/**
+ * Şema adımıyla gelen içerik paketini uygular ($dir: urunler.json, gorseller.json, uploads/).
+ * Kategoriler eklenir/güncellenir, görseller uploads'a kopyalanıp medyaya kaydedilir, yeni ürünler eklenir ve
+ * mevcut ürünler güncellenir. Yalnızca ürünü olan veritabanında çalışır (yeni kurulumda başlangıç içeriği sonra
+ * yüklenir); aynı kısa adlı ürün ya da aynı adlı görsel zaten varsa atlanır. Uygulama işlevlerine bağlı değildir:
+ * eski bir adım, ileride değişen işlevlerden etkilenmesin diye yalnızca PDO kullanır.
+ */
+function db_icerik_uygula(PDO $pdo, string $dir): void
+{
+    $c = json_decode((string) @file_get_contents("$dir/urunler.json"), true);
+    $gorseller = json_decode((string) @file_get_contents("$dir/gorseller.json"), true);
+    if (!is_array($c) || !is_array($gorseller) || (int) $pdo->query('SELECT COUNT(*) FROM products')->fetchColumn() === 0) {
+        return;
+    }
+    $now = gmdate('Y-m-d\\TH:i:s\\Z');
+    $q = static function (string $sql, array $params = []) use ($pdo): PDOStatement {
+        $st = $pdo->prepare($sql);
+        $st->execute($params);
+        return $st;
+    };
+    $json = static fn (mixed $v): string => json_encode($v, JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
+
+    foreach ($c['kategoriler'] ?? [] as $k) {
+        $q('INSERT OR IGNORE INTO categories (slug, title, description, sort_order, updated_at) VALUES (?, ?, ?, ?, ?)', [$k['slug'], $k['title'], $k['description'] ?? '', (int) ($k['sortOrder'] ?? 100), $now]);
+    }
+    foreach ($c['kategoriGuncelle'] ?? [] as $k) {
+        $q('UPDATE categories SET description = ?, updated_at = ? WHERE slug = ?', [$k['description'], $now, $k['slug']]);
+    }
+
+    // Görseller: dosyalar (ve boyut varyantları) uploads'a kopyalanır; var olan dosyaya dokunulmaz
+    $uploads = DATA_DIR . '/uploads';
+    if (!is_dir($uploads) && !@mkdir($uploads, 0755, true)) {
+        throw new RuntimeException('uploads klasörü oluşturulamadı');
+    }
+    $medya = [];
+    foreach ($gorseller as $key => $m) {
+        $base = (string) preg_replace('/\.webp$/', '', $m['file']);
+        foreach ([$m['file'], ...array_map(static fn ($w) => "$base-$w.webp", $m['variants'])] as $f) {
+            if (!is_file("$uploads/$f")) {
+                if (!@copy("$dir/uploads/$f", "$uploads/$f")) {
+                    throw new RuntimeException("Görsel kopyalanamadı: $f");
+                }
+                @chmod("$uploads/$f", 0644);
+            }
+        }
+        $q('INSERT OR IGNORE INTO media (file, alt, width, height, mime, variants, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)', [$m['file'], $c['gorseller'][$key] ?? '', (int) $m['width'], (int) $m['height'], 'image/webp', $json($m['variants']), $now]);
+        $medya[$key] = (int) $q('SELECT id FROM media WHERE file = ?', [$m['file']])->fetchColumn();
+    }
+    $gorsel = static fn (mixed $key): ?int => is_string($key) ? ($medya[$key] ?? null) : null;
+
+    $alanlar = array_flip(['modelName', 'badge', 'tagline', 'summary', 'gallery', 'sku', 'vehicleTypes', 'capabilities', 'keyFigures', 'highlights', 'specs', 'compare', 'boxContents', 'sections', 'descriptionHtml', 'faqs', 'seo']);
+    foreach ($c['urunler'] ?? [] as $p) {
+        if ($q('SELECT 1 FROM products WHERE slug = ?', [$p['slug']])->fetchColumn()) {
+            continue;
+        }
+        $p['gallery'] = array_values(array_filter(array_map($gorsel, $p['gallery'])));
+        $p['seo']['image'] = $gorsel($p['seo']['image'] ?? null);
+        foreach ($p['sections'] as $i => $b) {
+            if (array_key_exists('image', $b)) {
+                $p['sections'][$i]['image'] = $gorsel($b['image']);
+            }
+        }
+        $kategori = $q('SELECT id FROM categories WHERE slug = ?', [$p['kategori'] ?? ''])->fetchColumn();
+        $q(
+            'INSERT INTO products (slug, title, data, price_usd, compare_at_usd, stock_status, stock_quantity, published, featured, category_id, sort_order, created_at, updated_at) VALUES (?, ?, ?, ?, NULL, ?, NULL, 1, 0, ?, ?, ?, ?)',
+            [$p['slug'], $p['title'], $json(array_intersect_key($p, $alanlar) + ['legacyId' => null]), (float) $p['priceUsd'], $p['stockStatus'] ?? 'in_stock', $kategori === false ? null : (int) $kategori, (int) ($p['sortOrder'] ?? 100), $now, $now],
+        );
+    }
+
+    // Mevcut ürünler: fiyat, veri alanları (seo birleştirilir) ve başlığı eşleşen tanıtım bölümlerinin metni
+    foreach ($c['guncelle'] ?? [] as $g) {
+        $row = $q('SELECT id, data, price_usd FROM products WHERE slug = ?', [$g['slug']])->fetch(PDO::FETCH_ASSOC);
+        if (!$row) {
+            continue;
+        }
+        $data = json_decode((string) $row['data'], true) ?: [];
+        foreach ($g['veri'] ?? [] as $k => $v) {
+            $data[$k] = $k === 'seo' && is_array($data['seo'] ?? null) ? array_replace($data['seo'], $v) : $v;
+        }
+        foreach ($g['bolumMetinleri'] ?? [] as $b) {
+            foreach ($data['sections'] ?? [] as $i => $s) {
+                if (($s['type'] ?? '') === 'feature' && ($s['heading'] ?? '') === $b['baslik']) {
+                    $data['sections'][$i]['body'] = $b['metin'];
+                }
+            }
+        }
+        $q('UPDATE products SET data = ?, price_usd = ?, updated_at = ? WHERE id = ?', [$json($data), (float) ($g['priceUsd'] ?? $row['price_usd']), $now, (int) $row['id']]);
+    }
+
+    // Statik vitrin yeni içerikle yeniden derlensin.
+    $v = (int) ($pdo->query("SELECT value FROM meta WHERE key = 'content_version'")->fetchColumn() ?: 0) + 1;
+    $up = $pdo->prepare('INSERT INTO meta (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value');
+    $up->execute(['content_version', (string) $v]);
+    $up->execute(['content_updated_at', $now]);
 }

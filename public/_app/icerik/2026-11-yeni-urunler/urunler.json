@@ -1,0 +1,806 @@
+{
+ "aciklama": "Kasım 2026: Thinktool CE EVP902, CE EVP802 ve TES402 eklenir; CE EVD fiyatı 4.200 USD olur ve içeriği güçlendirilir. db.php şema adımı 5 bu dosyayı bir kez uygular. Görseller: uploads/ (boyutlar gorseller.json'da).",
+ "kategoriler": [
+  {
+   "slug": "atolye-ekipmanlari",
+   "title": "Atölye Ekipmanları",
+   "description": "Arıza tespitini tamamlayan görsel muayene ve ölçüm ekipmanları.",
+   "sortOrder": 60
+  }
+ ],
+ "kategoriGuncelle": [
+  {
+   "slug": "elektrikli-arac",
+   "description": "Elektrikli ve hibrit araçlar için arıza tespit cihazları ile batarya şarj, deşarj ve hücre dengeleme ekipmanları."
+  }
+ ],
+ "gorseller": {
+  "tes402-ana": "Thinktool TES402 eklem uçlu video endoskop kamera, 180° bükülmüş prob ucuyla",
+  "tes402-on": "Thinktool TES402 video endoskop ön görünüm: 4,5 inç ekran ve kumanda tuşları",
+  "tes402-yan": "Thinktool TES402 endoskop gövdesi, kumanda tekerleği ve 95 cm prob",
+  "evp902-ana": "Thinktool CE EVP902 elektrikli araç batarya şarj ve deşarj cihazı ön paneli",
+  "evp902-hucre-listesi": "CE EVP902 test ekranında hücre gerilimleri listesi",
+  "evp902-desarj-ayar": "CE EVP902 deşarj testi ayar ekranı: batarya bilgileri ve durma koşulları",
+  "evp902-sarj-ayar": "CE EVP902 şarj testi kesme parametreleri ekranı",
+  "evp902-grafik": "CE EVP902 hücre gerilimi grafiği ekranı",
+  "evp802-ana": "Thinktool CE EVP802 elektrikli araç batarya modül dengeleyici (ekolayzer)",
+  "evp802-menu": "CE EVP802 ana menüsü: dengeleme bakımı, veri analizi ve veri aktarımı",
+  "evp802-hucre-tablosu": "CE EVP802 hücre detay ekranı: gerilim, akım, durum ve kapasite",
+  "evp802-histogram": "CE EVP802 veri analizi ekranında hücre gerilimi histogramı",
+  "evp802-batarya-tipi": "CE EVP802 batarya tipi seçimi: LFP, NMC, LTO ve LMO"
+ },
+ "urunler": [
+  {
+   "slug": "thinktool-ce-evp902-ev-batarya-sarj-desarj-cihazi",
+   "title": "Thinktool CE EVP902 Elektrikli Araç Batarya Şarj ve Deşarj Cihazı",
+   "modelName": "CE EVP902",
+   "badge": "Yeni · EV",
+   "tagline": "2–260 V lityum batarya paketlerinde 100 A şarj, 150 A deşarj ve kapasite testi",
+   "summary": "Elektrikli ve hibrit araç bataryalarını araç dışında şarj eden, deşarj eden ve gerçek kapasitesini ölçen profesyonel servis cihazı. Hücre gerilimlerini 24 kanaldan izler, belirlediğiniz sınır aşıldığında testi kendiliğinden durdurur.",
+   "kategori": "elektrikli-arac",
+   "priceUsd": 6750,
+   "stockStatus": "in_stock",
+   "sku": "CE-EVP902",
+   "sortOrder": 61,
+   "gallery": [
+    "evp902-ana",
+    "evp902-hucre-listesi"
+   ],
+   "vehicleTypes": [
+    "elektrikli-hibrit"
+   ],
+   "capabilities": [
+    "batarya-bakim",
+    "ev-batarya"
+   ],
+   "keyFigures": [
+    {
+     "value": "2–260 V",
+     "label": "Çalışma gerilimi"
+    },
+    {
+     "value": "150 A",
+     "label": "Deşarj (7,2 kW)"
+    },
+    {
+     "value": "100 A",
+     "label": "Şarj (4,4 kW)"
+    },
+    {
+     "value": "24 kanal",
+     "label": "Hücre izleme"
+    }
+   ],
+   "highlights": [
+    "Sabit akım + sabit gerilim şarj; sabit akım ya da sabit güç deşarj",
+    "24 kanallı toplama modülüyle hücre bazında gerilim izleme",
+    "Süre, gerilim, kapasite ve hücre farkına göre otomatik test durdurma",
+    "BMS'e müdahale etmez; CAN ve RS485 haberleşme altyapısı (genişletilebilir işlev)",
+    "16 GB dahili kayıt, USB bellekle veri aktarımı ve Wi-Fi bağlantısı"
+   ],
+   "specs": [
+    {
+     "label": "Model",
+     "value": "Thinktool CE EVP902 (EVP-902)"
+    },
+    {
+     "label": "Cihaz tipi",
+     "value": "Lityum batarya paketi ve modülü şarj/deşarj test ekipmanı"
+    },
+    {
+     "label": "Şarj gerilim aralığı",
+     "value": "DC 2–260 V"
+    },
+    {
+     "label": "Deşarj gerilim aralığı",
+     "value": "DC 2–260 V"
+    },
+    {
+     "label": "Şarj akımı / gücü",
+     "value": "En fazla 100 A / 4,4 kW"
+    },
+    {
+     "label": "Deşarj akımı / gücü",
+     "value": "En fazla 150 A / 7,2 kW"
+    },
+    {
+     "label": "Şarj yöntemi",
+     "value": "Sabit akım + sabit gerilim (CC/CV)"
+    },
+    {
+     "label": "Deşarj modu",
+     "value": "Sabit akım, sabit güç"
+    },
+    {
+     "label": "Paket gerilimi doğruluğu",
+     "value": "≤ ±%0,5 FS + 0,3 V (çözünürlük 0,1 V)"
+    },
+    {
+     "label": "Hücre gerilimi doğruluğu",
+     "value": "≤ ±%0,1 FS + 5 mV (çözünürlük 0,001 V)"
+    },
+    {
+     "label": "Akım doğruluğu",
+     "value": "≤ ±%1 FS + 0,2 A (çözünürlük 0,1 A)"
+    },
+    {
+     "label": "Hücre verisi toplama",
+     "value": "24 kanallı toplama modülü, kablo demetiyle; en fazla 3 modül"
+    },
+    {
+     "label": "Haberleşme",
+     "value": "CAN, RS485 (genişletilebilir işlev), Wi-Fi"
+    },
+    {
+     "label": "Ekran",
+     "value": "7 inç TFT dokunmatik, 800 × 480"
+    },
+    {
+     "label": "Dahili hafıza",
+     "value": "16 GB"
+    },
+    {
+     "label": "Veri aktarımı",
+     "value": "USB bellek; bilgisayar yazılımıyla rapor"
+    },
+    {
+     "label": "Korumalar",
+     "value": "Ters bağlantı, aşırı gerilim, aşırı akım, kısa devre, aşırı sıcaklık; DC devre kesici"
+    },
+    {
+     "label": "Uyarı",
+     "value": "Ekran mesajı ve sesli alarm"
+    },
+    {
+     "label": "Besleme",
+     "value": "Tek faz 220 V AC, 40–60 Hz"
+    },
+    {
+     "label": "Soğutma",
+     "value": "Cebri hava soğutma"
+    },
+    {
+     "label": "Çalışma sıcaklığı",
+     "value": "−5 °C ile 40 °C arası"
+    },
+    {
+     "label": "Boyutlar",
+     "value": "512 × 295 × 339 mm"
+    },
+    {
+     "label": "Ağırlık",
+     "value": "28 kg"
+    }
+   ],
+   "compare": {
+    "screen": "7\" dokunmatik",
+    "memory": "16 GB",
+    "battery": "",
+    "maintenanceResets": null,
+    "brandCoverage": "Marka bağımsız (2–260 V)",
+    "softwareUpdates": "USB ile güncelleme",
+    "os": ""
+   },
+   "boxContents": "CE EVP902 ana ünite\nGüç kablosu AC 220 V / 10 A (yalnızca deşarj testleri)\nGüç kablosu AC 220 V / 20 A (şarj ve deşarj testleri)\nŞarj/deşarj kablosu (kırmızı +, siyah −)\n24 kanallı hücre gerilimi toplama modülü ve haberleşme kablosu\nHücre ölçüm klips kablosu (2 adet)\nPaket gerilimi ölçüm modülü ve bağlantı kabloları\nUSB bellek\nÜrün sertifikası ve hızlı başlangıç kılavuzu",
+   "sections": [
+    {
+     "type": "feature",
+     "eyebrow": "Ne işe yarar?",
+     "heading": "Batarya paketini araç dışında şarj edin, boşaltın, ölçün",
+     "body": "Bir elektrikli aracın yüksek gerilim bataryası onarım için söküldüğünde ya da pakete yeni bir modül takıldığında, modüllerin güvenli bir şarj seviyesine getirilmesi ve gerçek kapasitenin ölçülmesi gerekir. CE EVP902 bu işi araçtan bağımsız yapar: 2–260 V aralığındaki lityum paket ve modülleri 100 A'e kadar şarj eder, 150 A'e kadar deşarj eder ve iki işlemi art arda uygulayarak kapasite testi yapar.\n\nŞarj, sabit akım + sabit gerilim (CC/CV) yöntemiyle; deşarj ise sabit akım ya da sabit güç modunda yürütülür. Deşarj sırasında bataryadaki enerji cihazın içindeki yük direncinde ısıya dönüşür; bu nedenle cihaz iyi havalandırılan bir alanda çalıştırılmalıdır.",
+     "bullets": [
+      {
+       "title": "Kapasite testi",
+       "text": "Paketi tam şarjdan belirlediğiniz alt sınıra kadar boşaltarak gerçek Ah değerini ölçün ve etiket değeriyle karşılaştırın."
+      },
+      {
+       "title": "Depolama ve nakliye şarjı",
+       "text": "Sökülen ya da yeni gelen modülü güvenli şarj seviyesine getirin."
+      },
+      {
+       "title": "Onarım sonrası doğrulama",
+       "text": "Hücre veya modül değişiminden sonra tam döngü testiyle hücreler arası farkı kontrol edin."
+      },
+      {
+       "title": "Hibrit araç bataryaları",
+       "text": "Düşük gerilimli hibrit paketlerden 260 V'a kadar tek cihazla çalışın."
+      }
+     ],
+     "image": "evp902-desarj-ayar",
+     "layout": "image-right"
+    },
+    {
+     "type": "feature",
+     "eyebrow": "Hücre bazında izleme",
+     "heading": "Her hücreyi görün, sınır aşılınca test kendiliğinden dursun",
+     "body": "Paket gerilimi tek başına yeterli bilgi vermez; sorun çoğu zaman tek bir hücrededir. CE EVP902, kutudan çıkan 24 kanallı toplama modülüyle hücre gerilimlerini modülün ölçüm soketinden tek tek okur; gerektiğinde üç toplama modülüne kadar genişletilebilir. Test ekranında paket gerilimi, akım, test süresi, en yüksek ve en düşük hücre ile hücreler arası fark canlı izlenir.\n\nTest öncesinde belirlediğiniz durma koşullarından biri gerçekleştiğinde cihaz işlemi otomatik olarak sonlandırır; gözetim gerektirmeden uzun testler çalıştırabilirsiniz.",
+     "bullets": [
+      {
+       "title": "Deşarjda durma koşulları",
+       "text": "Süre, paket alt gerilimi, hedef deşarj kapasitesi (Ah), hücre alt gerilimi ve hücreler arası gerilim farkı."
+      },
+      {
+       "title": "Şarjda durma koşulları",
+       "text": "Süre, akım eşiği, hücre üst gerilimi ve paket üst gerilimi."
+      },
+      {
+       "title": "Donanım korumaları",
+       "text": "Ters bağlantı, aşırı gerilim, aşırı akım, kısa devre, aşırı sıcaklık ve fan arızasında otomatik kapanma; ekran uyarısı ve sesli alarm."
+      }
+     ],
+     "image": "evp902-grafik",
+     "layout": "image-left"
+    },
+    {
+     "type": "feature",
+     "eyebrow": "Kayıt ve raporlama",
+     "heading": "Test verisi kaybolmaz, rapora dönüşür",
+     "body": "Her şarj ve deşarj kaydı 16 GB dahili hafızaya otomatik yazılır ve beklenmedik bir kapanmada bile korunur. Kayıtlar cihaz üzerinde önizlenir, USB belleğe aktarılır ve bilgisayar yazılımıyla rapora dönüştürülür.\n\nAynı tip paketleri sık test ediyorsanız test ayarlarını bir kez hazırlayıp dışa aktarın, sonraki işlerde tek dokunuşla içe aktarın. Wi-Fi bağlantısıyla cihaz atölye ağına dahil edilebilir.",
+     "bullets": [],
+     "image": "evp902-sarj-ayar",
+     "layout": "image-right"
+    },
+    {
+     "type": "callout",
+     "tone": "warning",
+     "text": "CE EVP902 yüksek gerilimli batarya paketleriyle çalışır; yalnızca yüksek gerilim eğitimi almış personel tarafından, yalıtımlı el aletleri ve kişisel koruyucu donanımla kullanılmalıdır. Kabloları önce cihaza, sonra bataryaya bağlayın; sökerken ters sırayı izleyin. Şarj testleri için 20 A kabloyu 4,4 kW yükü karşılayan bir dağıtım panosu hattına bağlayın; 10 A kablo ve standart priz hattı yalnızca deşarj testleri içindir."
+    }
+   ],
+   "descriptionHtml": "<p><strong>Thinktool CE EVP902</strong>, elektrikli (EV) ve hibrit araçlarda kullanılan lityum iyon batarya paketlerini ve modüllerini araç dışında şarj, deşarj ve kapasite testinden geçiren profesyonel bir servis ekipmanıdır; batarya kapasite test cihazı ve deşarj cihazı işlevlerini tek gövdede birleştirir. Thinktool'un üreticisi THINKCAR tarafından geliştirilen cihaz; DC 2–260 V aralığında çalışır, 100 A şarj ve 150 A deşarj akımına ulaşır ve 24 kanaldan hücre gerilimlerini izleyerek bataryayı aşırı şarja ve aşırı deşarja karşı korur.</p><h3>Batarya servisinde CE EVP902'nin yeri</h3><p>Elektrikli araç bataryası onarımı genellikle üç adımdan oluşur: arızayı bulmak, arızalı modülü ya da hücreyi değiştirmek ve paketi yeniden dengeli, test edilmiş hâle getirmek. <a href=\"/urun/thinktool-ce-evd-elektrikli-arac-ariza-tespit-cihazi\">Thinktool CE EVD</a> arıza tespit cihazı batarya yönetim sistemine (BMS) bağlanıp hata kodlarını ve batarya verilerini okuyarak sorunlu bölgeyi gösterir. <a href=\"/urun/thinktool-ce-evp802-batarya-modul-dengeleyici\">Thinktool CE EVP802</a> modül içindeki hücreleri aynı gerilim seviyesine getirir. CE EVP902 ise modül ya da paket düzeyinde şarj, deşarj ve kapasite testi yaparak onarımın son kontrolünü sağlar.</p><h3>Adım adım deşarj (kapasite) testi</h3><ol><li>Cihazı topraklı prize bağlayın ve AC sigortasını kaldırarak çalıştırın.</li><li>Şarj/deşarj kablosunu önce cihaza, sonra bataryaya bağlayın (kırmızı +, siyah −). Hücre ölçümü için 24 kanallı toplama modülünü modülün gerilim ölçüm soketine takın.</li><li>“Deşarj testi” menüsünde paket/modül numarasını, nominal kapasiteyi, batarya tipini, seri hücre sayısını ve deşarj akımını girin.</li><li>Durma koşullarını belirleyin: süre, paket alt gerilimi, hedef kapasite, hücre alt gerilimi ve hücreler arası fark.</li><li>Ayarları kaydedin, DC devre kesiciyi kapatın ve testi başlatın; hücre gerilimlerini, akımı ve sıcaklığı canlı izleyin.</li><li>Test bittiğinde kaydı USB belleğe aktarın ve ölçülen kapasiteyi nominal değerle karşılaştırın.</li></ol><h3>CE EVP902 mi, CE EVP802 mi?</h3><p>İki cihaz birbirinin alternatifi değil, tamamlayıcısıdır. <strong>CE EVP902</strong> paketin ya da modülün <em>tamamını</em> yüksek akımla şarj eder, boşaltır ve kapasitesini ölçer. <strong>CE EVP802</strong> ise modül içindeki <em>tek tek hücrelere</em> en fazla 5 A'lik akımla müdahale ederek gerilim farklarını kapatır. Hücre değişimi yapan bir atölye için önerilen sıra: önce EVP802 ile dengeleme, ardından EVP902 ile kapasite doğrulama.</p><h3>400 V ve 800 V araçlarda kullanım</h3><p>CE EVP902'nin çalışma aralığı 260 V'a kadardır. Hibrit araçların paketlerinin çoğu ve elektrikli araç paketlerinden sökülen modüller bu aralıktadır. 400 V ve 800 V mimarili elektrikli araçlarda komple paket bu sınırın üzerinde olduğundan, test modül ya da modül grubu düzeyinde yapılır.</p>",
+   "faqs": [
+    {
+     "question": "Thinktool CE EVP902 hangi bataryalarda kullanılabilir?",
+     "answer": "DC 2–260 V aralığındaki lityum iyon batarya paketlerinde ve modüllerinde kullanılır. Bu aralık hibrit araç paketlerinin çoğunu, elektrikli araç paketlerinden sökülen modülleri ve 260 V'a kadar olan komple paketleri kapsar. 400 V ve 800 V mimarili araçlarda test modül ya da modül grubu düzeyinde yapılır. Hava ve sıvı soğutmalı paketler için ayrı ayar seçeneği bulunur. Paketinizin gerilimini ve kapasitesini bize iletirseniz uygunluğu birlikte kontrol ederiz."
+    },
+    {
+     "question": "CE EVP902 ile batarya kapasitesi nasıl ölçülür?",
+     "answer": "Paket önce tam şarj edilir, ardından belirlenen sabit akım ya da sabit güçle, paket veya hücre alt gerilim sınırına ulaşılana kadar deşarj edilir. Cihaz bu sürede çekilen toplam Ah değerini kaydeder. Ölçülen değer etiket kapasitesiyle karşılaştırılarak bataryanın sağlık durumu hakkında somut veri elde edilir."
+    },
+    {
+     "question": "Cihaz BMS'e veya araç yazılımına müdahale eder mi?",
+     "answer": "Hayır. CE EVP902 şarj ve deşarjı batarya kutupları üzerinden yapar ve batarya yönetim sistemine (BMS) müdahale etmez. Hücre gerilimleri kablo demeti üzerinden ölçülür; CAN ve RS485 haberleşmesi BMS verisini okumak için genişletilebilir bir işlev olarak sunulur."
+    },
+    {
+     "question": "Hangi elektrik altyapısı gerekir?",
+     "answer": "Cihaz tek faz 220 V AC (40–60 Hz) ile çalışır. Kutudan iki güç kablosu çıkar: 10 A kablo yalnızca deşarj testleri için standart prize, 20 A kablo ise şarj ve deşarj için 4,4 kW yükü karşılayan bir dağıtım panosu hattına bağlanır. Deşarjda enerji ısıya dönüştüğünden cihaz iyi havalandırılan bir alanda kullanılmalıdır."
+    },
+    {
+     "question": "Test verileri nasıl saklanır ve raporlanır?",
+     "answer": "Tüm şarj ve deşarj kayıtları 16 GB dahili hafızaya otomatik yazılır ve cihaz beklenmedik şekilde kapansa bile korunur. Kayıtlar USB belleğe aktarılıp bilgisayar yazılımıyla rapora dönüştürülebilir. Aynı tip paketler için test ayarları dışa ve içe aktarılabilir."
+    },
+    {
+     "question": "CE EVP902 ile CE EVP802 arasındaki fark nedir?",
+     "answer": "CE EVP902 paketin ya da modülün tamamını 150 A'e kadar deşarj, 100 A'e kadar şarj eder ve kapasitesini ölçer. CE EVP802 ise iki modüle kadar (2 × 12 hücre) her hücreyi ayrı ayrı, en fazla 5 A ile şarj, deşarj ve dengeleme yapar. Hücre değişimi yapan servisler iki cihazı genellikle birlikte kullanır: önce dengeleme, sonra kapasite testi."
+    },
+    {
+     "question": "Kurulum ve kullanım desteği veriyor musunuz?",
+     "answer": "Evet. Bağlantı sırası, test ayarları ve güvenli çalışma konusunda telefon, WhatsApp ve uzaktan bağlantı ile destek veriyoruz. Yüksek gerilim sistemlerinde çalışacak personelin ilgili güvenlik eğitimini almış olması gerekir."
+    },
+    {
+     "question": "Ödeme ve teslimat nasıl yapılıyor?",
+     "answer": "Kredi kartıyla PayTR güvenli ödeme altyapısı üzerinden ödeyebilir ya da WhatsApp'tan sipariş verebilirsiniz; taksit seçenekleri ödeme adımında gösterilir. Stoktaki ürünler 1–3 iş günü içinde Türkiye'nin her yerine ücretsiz kargoyla gönderilir."
+    }
+   ],
+   "seo": {
+    "title": "Thinktool CE EVP902 Batarya Şarj ve Deşarj Cihazı",
+    "description": "Thinktool CE EVP902: EV ve hibrit lityum bataryalar için 2–260 V, 100 A şarj, 150 A deşarj, kapasite testi ve 24 kanal hücre izleme. Ücretsiz kargo.",
+    "image": "evp902-ana"
+   }
+  },
+  {
+   "slug": "thinktool-ce-evp802-batarya-modul-dengeleyici",
+   "title": "Thinktool CE EVP802 Elektrikli Araç Batarya Modül Dengeleyici",
+   "modelName": "CE EVP802",
+   "badge": "Yeni · EV",
+   "tagline": "İki modülde 24 hücreyi aynı anda şarj, deşarj ve dengelemeyle tek seviyeye getirin",
+   "summary": "Elektrikli ve hibrit araç batarya modüllerindeki hücreleri tek tek şarj eden, boşaltan ve aynı gerilim seviyesine getiren hücre dengeleme cihazı (ekolayzer). Hücre ya da modül değişiminden sonra modülün dengesini geri kazandırır.",
+   "kategori": "elektrikli-arac",
+   "priceUsd": 5350,
+   "stockStatus": "in_stock",
+   "sku": "CE-EVP802",
+   "sortOrder": 62,
+   "gallery": [
+    "evp802-ana",
+    "evp802-menu"
+   ],
+   "vehicleTypes": [
+    "elektrikli-hibrit"
+   ],
+   "capabilities": [
+    "batarya-bakim",
+    "ev-batarya"
+   ],
+   "keyFigures": [
+    {
+     "value": "24 hücre",
+     "label": "Aynı anda (2 × 12)"
+    },
+    {
+     "value": "1,8–4,2 V",
+     "label": "Hücre gerilimi"
+    },
+    {
+     "value": "0,1–5 A",
+     "label": "Hücre başına akım"
+    },
+    {
+     "value": "600 W",
+     "label": "En yüksek güç"
+    }
+   ],
+   "highlights": [
+    "Şarj, deşarj ve dengeleme olmak üzere üç çalışma modu",
+    "LFP, NMC (üçlü lityum), LTO ve LMO hücre desteği",
+    "Her modül için 16 pinli dengeleme ve 24 pinli sıcaklık arayüzü",
+    "Hücre bazında gerilim, akım, kapasite ve sıcaklık takibi",
+    "Histogram ve eğri grafikleri; veriler USB belleğe Excel tablosu olarak"
+   ],
+   "specs": [
+    {
+     "label": "Model",
+     "value": "Thinktool CE EVP802 (EVP-802)"
+    },
+    {
+     "label": "Cihaz tipi",
+     "value": "Lityum batarya modülü hücre dengeleme cihazı (ekolayzer)"
+    },
+    {
+     "label": "Desteklenen modül",
+     "value": "En fazla 2 modül, modül başına 12 hücre (toplam 24)"
+    },
+    {
+     "label": "Çalışma modları",
+     "value": "Şarj, deşarj, dengeleme"
+    },
+    {
+     "label": "Hücre şarj/deşarj gerilimi",
+     "value": "1,8–4,2 V"
+    },
+    {
+     "label": "Gerilim ölçüm doğruluğu",
+     "value": "±%0,1 FS ± 2 mV (5 V ölçüm aralığı)"
+    },
+    {
+     "label": "Şarj/deşarj akımı",
+     "value": "0,1–5 A"
+    },
+    {
+     "label": "Akım ölçüm doğruluğu",
+     "value": "±%1 FS ± 0,05 A (5 A ölçüm aralığı)"
+    },
+    {
+     "label": "Sıcaklık ölçüm doğruluğu",
+     "value": "±2 °C (−25 °C ile 85 °C arası)"
+    },
+    {
+     "label": "Toplam güç",
+     "value": "En fazla 600 W"
+    },
+    {
+     "label": "Şarj yöntemi",
+     "value": "Sabit akım + sabit gerilim (CC/CV)"
+    },
+    {
+     "label": "Deşarj modu",
+     "value": "Sabit akım"
+    },
+    {
+     "label": "Batarya tipleri",
+     "value": "LFP, NMC (üçlü lityum), LTO, LMO"
+    },
+    {
+     "label": "Batarya arayüzü",
+     "value": "16 pin dengeleme, 24 pin sıcaklık (modül başına)"
+    },
+    {
+     "label": "Ekran",
+     "value": "7 inç kapasitif dokunmatik"
+    },
+    {
+     "label": "Veri",
+     "value": "Histogram ve eğri grafiği; USB belleğe Excel tablosu"
+    },
+    {
+     "label": "Haberleşme",
+     "value": "TCP/IP ve USB (genişletilebilir işlev), Wi-Fi (harici)"
+    },
+    {
+     "label": "Korumalar",
+     "value": "Giriş aşırı akım ve aşırı gerilim; çıkış aşırı akım ve aşırı sıcaklık; ters bağlantı ve kısa devre"
+    },
+    {
+     "label": "Besleme",
+     "value": "Tek faz AC 90–264 V, 40–60 Hz"
+    },
+    {
+     "label": "Soğutma",
+     "value": "Cebri hava soğutma"
+    },
+    {
+     "label": "Çalışma sıcaklığı",
+     "value": "−5 °C ile 40 °C arası"
+    },
+    {
+     "label": "Boyutlar",
+     "value": "496 × 246 × 262 mm"
+    },
+    {
+     "label": "Ağırlık",
+     "value": "14 kg"
+    }
+   ],
+   "compare": {
+    "screen": "7\" dokunmatik",
+    "memory": "",
+    "battery": "",
+    "maintenanceResets": null,
+    "brandCoverage": "Marka bağımsız (LFP, NMC, LTO, LMO)",
+    "softwareUpdates": "USB ile güncelleme",
+    "os": ""
+   },
+   "boxContents": "CE EVP802 ana ünite\nGüç kablosu AC 220 V / 10 A\nDengeleme ana kablo demeti (1. ve 2. modül için, 2 adet)\nDengeleme klips kablosu (2 adet)\nUSB bellek\nÜrün sertifikası ve hızlı başlangıç kılavuzu",
+   "sections": [
+    {
+     "type": "feature",
+     "eyebrow": "Neden dengeleme?",
+     "heading": "Bir modül, en zayıf hücresi kadar güçlüdür",
+     "body": "Seri bağlı hücrelerden oluşan bir batarya modülünde hücreler zamanla farklı hızlarda yaşlanır. Gerilimi düşük kalan tek bir hücre, şarjda diğerlerinin dolmasını engeller; deşarjda ise modülün kullanılabilir kapasitesini kendi seviyesine çeker. BMS bu farkı algıladığında güç sınırlaması ya da hata kodu devreye girer.\n\nAynı durum hücre veya modül değişiminden sonra da yaşanır: yeni parça, paketteki eski hücrelerle aynı şarj seviyesinde değildir. CE EVP802 her hücreyi ayrı bir kanaldan şarj ya da deşarj ederek tüm hücreleri belirlediğiniz hedef gerilimde buluşturur.",
+     "bullets": [
+      {
+       "title": "Hücre değişimi sonrası",
+       "text": "Yeni hücreyi modüldeki diğer hücrelerle aynı gerilime getirin."
+      },
+      {
+       "title": "Modül değişimi öncesi",
+       "text": "Takılacak modülü paketteki modüllerin şarj seviyesine eşitleyin."
+      },
+      {
+       "title": "Menzil ve kapasite kaybı",
+       "text": "Kapasite düşüşüne yol açan dengesiz hücreleri bulun ve düzeltin."
+      },
+      {
+       "title": "Depolanan modüller",
+       "text": "Uzun süre bekleyen modülleri bakım şarjıyla güvenli seviyede tutun."
+      }
+     ],
+     "image": "evp802-hucre-tablosu",
+     "layout": "image-right"
+    },
+    {
+     "type": "feature",
+     "eyebrow": "Nasıl çalışır?",
+     "heading": "Hedef gerilimi girin, cihaz her hücreyi ayrı ayrı yönetsin",
+     "body": "Modül, 16 pinli dengeleme kablo demetiyle cihaza bağlanır; 24 pinli arayüz dört noktadan sıcaklık okur. Ayar ekranında modül numarası, çalışma modu (şarj, deşarj ya da dengeleme), batarya tipi, seri hücre sayısı, işleme alınacak hücreler, hedef gerilim ve çalışma akımı seçilir. İki modül birbirinden bağımsız ayarlanır; biri şarj edilirken diğeri deşarj edilebilir.\n\nBir hücrenin gerilimi hedefe ulaştığında ve akımı 3 dakikadan uzun süre 0,2 A'in altında kaldığında o hücre “tamamlandı” olarak işaretlenir. Bir modüldeki tüm hücreler tamamlandığında işlem kendiliğinden sona erer.",
+     "bullets": [],
+     "image": "evp802-batarya-tipi",
+     "layout": "image-left"
+    },
+    {
+     "type": "feature",
+     "eyebrow": "Veri ve rapor",
+     "heading": "Dengeleme sonucunu grafikle görün, belgeleyin",
+     "body": "İşlem boyunca her hücrenin gerilimi, akımı, durumu ve aktarılan kapasitesi (Ah) tablo hâlinde izlenir. Test bittiğinde hücre gerilimleri histogram, gerilim ve akım değişimi ise eğri grafiği olarak görüntülenir.\n\nKayıtlar USB belleğe Excel tablosu olarak aktarılır. Böylece müşterinize işlem öncesi ve sonrası hücre farkını gösteren somut bir rapor sunabilirsiniz.",
+     "bullets": [],
+     "image": "evp802-histogram",
+     "layout": "image-right"
+    },
+    {
+     "type": "callout",
+     "tone": "warning",
+     "text": "CE EVP802 modül düzeyinde düşük gerilimle çalışır; ancak bağlandığı modül, sökülmüş bir yüksek gerilim paketinin parçasıdır. Bağlantıları yalıtımlı aletlerle ve hücre sırasına dikkat ederek yapın: kabloları önce cihaza, sonra modüle takın. Cihaz yalnızca yüksek gerilim güvenliği eğitimi almış personel tarafından kullanılmalıdır."
+    }
+   ],
+   "descriptionHtml": "<p><strong>Thinktool CE EVP802</strong>, elektrikli ve hibrit araç batarya modüllerindeki seri bağlı lityum hücreleri tek tek şarj eden, deşarj eden ve aynı gerilim seviyesine getiren bir hücre dengeleme cihazıdır; sektörde batarya balans cihazı ya da modül ekolayzeri olarak da anılır. Thinktool'un üreticisi THINKCAR tarafından geliştirilen cihaz, aynı anda iki modülde toplam 24 hücreyle çalışır; her hücreyi 1,8–4,2 V aralığında, 0,1–5 A akımla yönetir ve BMS'e müdahale etmeden araç dışında kullanılır.</p><h3>Hücre dengesizliği nasıl anlaşılır?</h3><p>Arıza tespit cihazında hücre gerilimleri arasında belirgin fark görülmesi, hücre gerilim sapmasıyla ilgili BMS hata kodları, şarjın erken kesilmesi ya da menzilde ani düşüş, dengeleme ihtiyacının tipik işaretleridir. <a href=\"/urun/thinktool-ce-evd-elektrikli-arac-ariza-tespit-cihazi\">Thinktool CE EVD</a> ile batarya verisi okunup sorunlu modül belirlendikten sonra modül sökülerek CE EVP802'ye bağlanır.</p><h3>Adım adım hücre dengeleme</h3><ol><li>Cihazı 220 V prize bağlayın ve açın.</li><li>Dengeleme kablo demetini önce cihazdaki modül soketine, ardından modülün hücre bağlantılarına sırasıyla takın.</li><li>Ayar ekranında batarya tipini (LFP, NMC, LTO ya da LMO), seri hücre sayısını ve işleme alınacak hücreleri seçin.</li><li>Çalışma modunu “dengeleme” olarak belirleyin; hedef hücre gerilimini ve çalışma akımını girin.</li><li>İşlemi başlatın; “Detaylar” ekranından her hücrenin gerilimini, akımını ve kapasitesini izleyin.</li><li>Tüm hücreler “tamamlandı” olduğunda sonucu histogramda kontrol edin ve kaydı USB belleğe aktarın.</li></ol><h3>CE EVP802 ve CE EVP902 birlikte nasıl kullanılır?</h3><p>CE EVP802 hücreleri <em>eşitler</em>; <a href=\"/urun/thinktool-ce-evp902-ev-batarya-sarj-desarj-cihazi\">Thinktool CE EVP902</a> ise modülün ya da paketin tamamını yüksek akımla şarj edip boşaltarak <em>kapasitesini ölçer</em>. Hücre değişimi yapılan bir modülde önerilen sıra: CE EVP802 ile dengeleme, ardından CE EVP902 ile tam döngü kapasite testi ve araca montajdan sonra CE EVD ile BMS kontrolü.</p>",
+   "faqs": [
+    {
+     "question": "Thinktool CE EVP802 ne işe yarar?",
+     "answer": "CE EVP802, elektrikli ve hibrit araç batarya modüllerindeki hücreleri ayrı ayrı şarj eden, deşarj eden ve aynı gerilim seviyesine getiren bir dengeleme cihazıdır. Hücre ya da modül değişiminden sonra, hücreler arası gerilim farkı nedeniyle kapasite kaybı yaşayan modüllerde ve uzun süre depolanan modüllerin bakımında kullanılır."
+    },
+    {
+     "question": "Aynı anda kaç hücre dengelenebilir?",
+     "answer": "Cihazda iki bağımsız modül kanalı bulunur ve her kanal en fazla 12 seri hücreyi yönetir; böylece aynı anda toplam 24 hücre işleme alınabilir. Hangi hücrelerin işleme alınacağını tek tek seçebilir, iki modülü farklı modlarda çalıştırabilirsiniz."
+    },
+    {
+     "question": "Hangi batarya kimyalarını destekliyor?",
+     "answer": "Lityum demir fosfat (LFP), üçlü lityum (NMC), lityum titanat (LTO) ve lityum manganez oksit (LMO) hücreler desteklenir. Hücre başına çalışma aralığı 1,8–4,2 V'tur ve her kimya için ayrı sıcaklık koruma sınırı tanımlanabilir."
+    },
+    {
+     "question": "Dengeleme ne zaman tamamlanmış sayılır?",
+     "answer": "Bir hücrenin gerilimi belirlediğiniz hedef değere ulaşıp çalışma akımı 3 dakikadan uzun süre 0,2 A'in altında kaldığında o hücre “tamamlandı” olarak işaretlenir. Bir modüldeki tüm hücreler tamamlandığında işlem otomatik olarak sona erer."
+    },
+    {
+     "question": "Ölçüm ne kadar hassas?",
+     "answer": "Hücre gerilimi ±%0,1 FS ± 2 mV (5 V ölçüm aralığı), akım ±%1 FS ± 0,05 A, sıcaklık ise ±2 °C doğrulukla ölçülür. Cihazda gerilim ve akım kalibrasyon işlevi bulunur; ölçüm doğruluğu gerektiğinde yeniden ayarlanabilir."
+    },
+    {
+     "question": "CE EVP802 ile CE EVP902 arasındaki fark nedir?",
+     "answer": "CE EVP802 modül içindeki her hücreye ayrı kanaldan, en fazla 5 A ile müdahale eder ve hücreleri aynı gerilime getirir. CE EVP902 ise paketin ya da modülün tamamını 100 A'e kadar şarj, 150 A'e kadar deşarj eder ve kapasitesini ölçer. Biri dengeleme, diğeri kapasite testi içindir; batarya onarımı yapan servisler ikisini birlikte kullanır."
+    },
+    {
+     "question": "Kurulum ve kullanım desteği veriyor musunuz?",
+     "answer": "Evet. Kablo bağlantıları, batarya tipi ve hedef gerilim ayarları ile güvenli çalışma konusunda telefon, WhatsApp ve uzaktan bağlantı ile destek veriyoruz. Cihazı kullanacak personelin yüksek gerilim güvenliği eğitimi almış olması gerekir."
+    },
+    {
+     "question": "Ödeme ve teslimat nasıl yapılıyor?",
+     "answer": "Kredi kartıyla PayTR güvenli ödeme altyapısı üzerinden ödeyebilir ya da WhatsApp'tan sipariş verebilirsiniz; taksit seçenekleri ödeme adımında gösterilir. Stoktaki ürünler 1–3 iş günü içinde Türkiye'nin her yerine ücretsiz kargoyla gönderilir."
+    }
+   ],
+   "seo": {
+    "title": "Thinktool CE EVP802 Batarya Modül Dengeleyici",
+    "description": "Thinktool CE EVP802 hücre dengeleme cihazı: 2 modülde 24 hücreye şarj, deşarj ve dengeleme; LFP, NMC, LTO, LMO desteği, 7 inç dokunmatik ekran.",
+    "image": "evp802-ana"
+   }
+  },
+  {
+   "slug": "thinktool-tes402-eklem-uclu-endoskop-kamera",
+   "title": "Thinktool TES402 Eklem Uçlu Video Endoskop Kamera",
+   "modelName": "TES402",
+   "badge": "Yeni",
+   "tagline": "6,2 mm prob, çift yönlü 180° eklem ve 4,5 inç ekranla motoru sökmeden içini görün",
+   "summary": "Buji yuvasından silindire, torpido arkasından klima kanalına kadar göremediğiniz noktaları sökmeden inceleyen eklem uçlu video endoskop. Bulguyu fotoğraf ve videoyla kaydedip müşterinize gösterin.",
+   "kategori": "atolye-ekipmanlari",
+   "priceUsd": 210,
+   "stockStatus": "in_stock",
+   "sku": "TES402",
+   "sortOrder": 96,
+   "gallery": [
+    "tes402-ana",
+    "tes402-on",
+    "tes402-yan"
+   ],
+   "vehicleTypes": [
+    "binek",
+    "hafif-ticari",
+    "agir-vasita",
+    "elektrikli-hibrit"
+   ],
+   "capabilities": [
+    "gorsel-muayene"
+   ],
+   "keyFigures": [
+    {
+     "value": "6,2 mm",
+     "label": "Prob çapı"
+    },
+    {
+     "value": "180°",
+     "label": "Çift yönlü eklem"
+    },
+    {
+     "value": "4,5\"",
+     "label": "Renkli ekran"
+    },
+    {
+     "value": "95 cm",
+     "label": "Prob uzunluğu"
+    }
+   ],
+   "highlights": [
+    "Kumanda tekerleğiyle prob ucunu iki yöne 180°'ye kadar bükme",
+    "6 yüksek parlaklıklı, ayarlanabilir LED ile karanlık boşluklarda net görüntü",
+    "1280×720 fotoğraf ve video kaydı; 8 GB microSD kart kutuda",
+    "Yağa ve suya dayanıklı prob kılıfı, prob ucu 80 °C'ye kadar dayanıklı",
+    "USB-C ile şarj, tek şarjla yaklaşık 3 saat kullanım"
+   ],
+   "specs": [
+    {
+     "label": "Model",
+     "value": "Thinktool TES402 (TES-402)"
+    },
+    {
+     "label": "Cihaz tipi",
+     "value": "Eklem uçlu (artikülasyonlu) video endoskop"
+    },
+    {
+     "label": "Kamera çözünürlüğü",
+     "value": "1280 × 720 (HD)"
+    },
+    {
+     "label": "Kare hızı",
+     "value": "30 fps"
+    },
+    {
+     "label": "Prob (kamera başlığı) çapı",
+     "value": "6,2 mm"
+    },
+    {
+     "label": "Prob uzunluğu",
+     "value": "950 mm"
+    },
+    {
+     "label": "Eklem hareketi",
+     "value": "Çift yönlü, 180°'ye kadar"
+    },
+    {
+     "label": "Görüş açısı",
+     "value": "100°"
+    },
+    {
+     "label": "Odak mesafesi",
+     "value": "2–8 cm"
+    },
+    {
+     "label": "Aydınlatma",
+     "value": "6 adet yüksek parlaklıklı LED, ayarlanabilir"
+    },
+    {
+     "label": "Ekran",
+     "value": "4,5 inç renkli LCD, 480 × 854 piksel"
+    },
+    {
+     "label": "Kayıt",
+     "value": "Fotoğraf ve video, microSD kart (8 GB kart dahil)"
+    },
+    {
+     "label": "Görüntü işlevleri",
+     "value": "Yakınlaştırma ve görüntüyü çevirme"
+    },
+    {
+     "label": "Batarya süresi",
+     "value": "Yaklaşık 3 saat"
+    },
+    {
+     "label": "Şarj",
+     "value": "USB-C"
+    },
+    {
+     "label": "Prob yapısı",
+     "value": "Yarı sert, esnek; yağa ve suya dayanıklı kılıf"
+    },
+    {
+     "label": "Prob çalışma sıcaklığı",
+     "value": "−10 °C ile 80 °C arası"
+    },
+    {
+     "label": "Cihaz çalışma sıcaklığı",
+     "value": "−10 °C ile 50 °C arası"
+    }
+   ],
+   "compare": {
+    "screen": "4,5\"",
+    "memory": "8 GB microSD",
+    "battery": "≈ 3 saat",
+    "maintenanceResets": null,
+    "brandCoverage": "Tüm araçlar",
+    "softwareUpdates": "Gerekmez",
+    "os": ""
+   },
+   "boxContents": "TES402 video endoskop (eklem uçlu prob gövdeye bağlı)\n8 GB microSD hafıza kartı\nUSB-C şarj kablosu",
+   "sections": [
+    {
+     "type": "feature",
+     "eyebrow": "Kullanım alanları",
+     "heading": "Sökmeden görün, kanıtla anlatın",
+     "body": "Bir arızanın kaynağını görmek çoğu zaman parça sökmeyi gerektirir: silindir kapağı, emme manifoldu, torpido paneli. TES402, 6,2 mm'lik probunu buji ya da enjektör yuvası gibi küçük bir açıklıktan içeri sokarak bu adımı atlamanızı sağlar. Ekranda gördüğünüz görüntüyü tek tuşla fotoğraf ya da video olarak kaydedersiniz; müşterinize “karbon birikmiş” demek yerine birikintinin kendisini gösterirsiniz.\n\nGörüş açısı 100°, odak mesafesi 2–8 cm'dir. Bu aralık; supap kenarı, piston üstü ya da bir konnektör pimi gibi küçük ayrıntıları yakından ve okunaklı biçimde görüntülemek için idealdir.",
+     "bullets": [
+      {
+       "title": "Silindir ve yanma odası",
+       "text": "Piston üstündeki karbon, supap oturma yüzeyi ve silindir cidarındaki çizikler buji yuvasından kontrol edilir."
+      },
+      {
+       "title": "Emme hattı ve turbo",
+       "text": "Manifoldda kurum ve yağ birikimi, intercooler hortumunda yabancı cisim taraması."
+      },
+      {
+       "title": "Torpido ve kaporta içi",
+       "text": "Kablo demeti, konnektör, kemirgen hasarı ve panel arkasına düşmüş parçalar."
+      },
+      {
+       "title": "Klima ve havalandırma",
+       "text": "Evaporatör yüzeyi, kanal tıkanıklığı ve koku kaynağının tespiti."
+      },
+      {
+       "title": "Şasi ve kapalı profiller",
+       "text": "Ekspertizde pas, çatlak ve onarım izlerinin kontrolü."
+      },
+      {
+       "title": "Fren, yakıt ve yağ hatları",
+       "text": "Sızıntı izleri ve sürtünmeden kaynaklanan aşınma."
+      }
+     ],
+     "image": "tes402-yan",
+     "layout": "image-right"
+    },
+    {
+     "type": "feature",
+     "eyebrow": "Eklem uç",
+     "heading": "Köşenin arkasını görmek için ucu yönlendirin",
+     "body": "Sabit uçlu bir kamera yalnızca önüne bakar; dar bir boşlukta hedefe dönemez. TES402'nin gövdesindeki kumanda tekerleği prob ucunu iki yönde 180°'ye kadar büker. Böylece ucu bir silindirin içinde geri çevirip supabın alt yüzüne ya da bir dirseğin arkasındaki hortum bağlantısına bakabilirsiniz.\n\nProb yarı sert yapıdadır: verdiğiniz şekli korur, itildiğinde kıvrılıp geri dönmez. Bu sayede uzun ve kıvrımlı yollarda kamerayı hedefe kadar sürmek kolaylaşır. Toplam prob uzunluğu 95 cm'dir.",
+     "bullets": [],
+     "image": "tes402-ana",
+     "layout": "image-left"
+    },
+    {
+     "type": "callout",
+     "tone": "warning",
+     "text": "Prob ucu −10 °C ile 80 °C arasında çalışacak şekilde tasarlanmıştır. Sıcak motorda, egzoz ve turbo çevresinde incelemeye başlamadan önce parçaların soğumasını bekleyin. Elektrikli ve hibrit araçlarda yüksek gerilim bileşenlerinin yakınında çalışmadan önce sistemi üreticinin servis prosedürüne göre gerilimsiz hâle getirin."
+    }
+   ],
+   "descriptionHtml": "<p><strong>Thinktool TES402</strong>, motor, şanzıman, kaporta ve tesisat gibi gözle ulaşılamayan bölgeleri parça sökmeden incelemek için geliştirilmiş eklem uçlu (artikülasyonlu) bir video endoskop kameradır; atölyelerde oto endoskop ya da boroskop olarak da bilinir. Thinktool'un üreticisi THINKCAR tarafından geliştirilen cihaz; 6,2 mm çapındaki probunun ucundaki 1280×720 çözünürlüklü kamerayı 6 LED ile aydınlatır, görüntüyü 4,5 inç renkli ekranda anlık gösterir ve microSD karta kaydeder. Kendi bataryasıyla çalışır; tablet, telefon ya da arıza tespit cihazına bağlanması gerekmez.</p><h3>TES402 ile tipik bir silindir içi kontrol</h3><ol><li>Motoru soğumaya bırakın ve bujiyi (dizel motorda enjektörü ya da kızdırma bujisini) sökün.</li><li>Cihazı açın ve LED parlaklığını boşluğun durumuna göre ayarlayın.</li><li>Probu yuvadan yavaşça indirin; kumanda tekerleğiyle ucu çevirerek piston üstünü, silindir cidarını ve supapları tarayın.</li><li>Gerekirse ekranda yakınlaştırın; bulguyu fotoğraf ya da video olarak kaydedin.</li><li>Kayıtları microSD kart üzerinden bilgisayara aktarın ve iş emrine ya da ekspertiz raporuna ekleyin.</li></ol><h3>Arıza tespit cihazıyla birlikte kullanım</h3><p>Arıza tespit cihazı bir hatanın <em>nerede</em> olduğunu söyler; endoskop o noktada <em>ne</em> olduğunu gösterir. Örneğin bir silindirde tekleme kodu (P0301 gibi) okunduğunda, buji ve bobin kontrolünden sonra TES402 ile aynı silindirin yanma odasına bakarak karbon birikmesi, supap hasarı ya da silindir cidarı çizilmesi gibi mekanik nedenleri sökmeden ayırt edebilirsiniz. Bu yüzden TES402, <a href=\"/urunler\">Thinktool arıza tespit cihazlarının</a> yanında atölyenin en sık kullanılan yardımcı ekipmanlarından biridir.</p><h3>TES402 kimler için uygun?</h3><ul><li><strong>Oto servisler ve motor ustaları:</strong> silindir, supap ve emme hattı kontrolü.</li><li><strong>Ekspertiz firmaları:</strong> şasi, direk ve kapalı profillerde gizli hasar ve onarım izi tespiti.</li><li><strong>Klima ve oto elektrik ustaları:</strong> kanal, evaporatör ve kablo demeti kontrolü.</li><li><strong>Filo ve ağır vasıta bakımı:</strong> araçtan bağımsız çalıştığı için 12 V ve 24 V tüm araçlarda görsel muayene.</li></ul>",
+   "faqs": [
+    {
+     "question": "Thinktool TES402 hangi araçlarda kullanılabilir?",
+     "answer": "TES402 araçla elektriksel bağlantı kurmadan, kendi bataryasıyla çalışır. Bu nedenle binek, hafif ticari, ağır vasıta, elektrikli ve hibrit tüm araçlarda; ayrıca makine bakımı ve bina tesisatı gibi araç dışı işlerde de kullanılabilir. Probun girebilmesi için 6,2 mm'den geniş bir açıklık yeterlidir."
+    },
+    {
+     "question": "Eklem uçlu endoskopun sabit uçlu endoskoptan farkı nedir?",
+     "answer": "Sabit uçlu endoskoplar yalnızca probun baktığı yönü gösterir. TES402'nin ucu gövdedeki kumanda tekerleğiyle iki yönde 180°'ye kadar bükülür; böylece silindir içinde supapların alt yüzüne ya da bir köşenin arkasına bakabilirsiniz. Bu hem inceleme süresini kısaltır hem de parça sökme ihtiyacını azaltır."
+    },
+    {
+     "question": "TES402 ile fotoğraf ve video kaydedilebilir mi?",
+     "answer": "Evet. Ekranda gördüğünüz görüntü 1280×720 çözünürlükte fotoğraf ya da video olarak microSD karta kaydedilir; kutudan 8 GB kart çıkar. Kayıtları kart okuyucuyla bilgisayara aktarıp müşterinize gönderebilir ya da rapora ekleyebilirsiniz."
+    },
+    {
+     "question": "Prob suya, yağa ve sıcağa dayanıklı mı?",
+     "answer": "Prob kılıfı yağa ve suya dayanıklıdır; motor yağı, yakıt kalıntısı ve nemli ortamlarda kullanılabilir. Prob ucu −10 °C ile 80 °C, cihaz gövdesi −10 °C ile 50 °C arasında çalışır. Sıcak motorda kullanmadan önce parçaların soğumasını bekleyin."
+    },
+    {
+     "question": "Şarjı ne kadar dayanır, nasıl şarj edilir?",
+     "answer": "Dahili batarya tek şarjla yaklaşık 3 saat kesintisiz kullanım sağlar. Cihaz, kutudan çıkan USB-C kabloyla şarj edilir."
+    },
+    {
+     "question": "TES402'nin bir arıza tespit cihazına bağlanması gerekir mi?",
+     "answer": "Hayır. TES402 kendi ekranı, bataryası ve kayıt birimiyle tek başına çalışan bağımsız bir cihazdır; tablet, telefon ya da arıza tespit cihazı gerektirmez. Arıza tespit cihazıyla birlikte kullanıldığında, cihazın işaret ettiği noktayı görsel olarak doğrulamanızı sağlar."
+    },
+    {
+     "question": "Ödeme ve teslimat nasıl yapılıyor?",
+     "answer": "Kredi kartıyla PayTR güvenli ödeme altyapısı üzerinden ödeyebilir ya da WhatsApp'tan sipariş verebilirsiniz; taksit seçenekleri ödeme adımında gösterilir. Stoktaki ürünler 1–3 iş günü içinde Türkiye'nin her yerine ücretsiz kargoyla gönderilir."
+    }
+   ],
+   "seo": {
+    "title": "Thinktool TES402 Eklem Uçlu Endoskop Kamera",
+    "description": "Thinktool TES402 eklem uçlu video endoskop: 6,2 mm prob, iki yöne 180° bükülen uç, 4,5 inç ekran, 6 LED ve HD fotoğraf/video kaydı. Ücretsiz kargo.",
+    "image": "tes402-ana"
+   }
+  }
+ ],
+ "guncelle": [
+  {
+   "slug": "thinktool-ce-evd-elektrikli-arac-ariza-tespit-cihazi",
+   "priceUsd": 4200,
+   "bolumMetinleri": [
+    {
+     "baslik": "Güçlü Online Programlama",
+     "metin": "CE EVD, desteklenen araçlarda kontrol ünitelerinin çevrim içi programlama ve kodlama işlemlerini yürütür. Yeni takılan bir ünitenin araca tanıtılması ya da yazılımının güncellenmesi gibi işlemler, desteklenen modellerde aracı başka bir yere götürmeden atölyede tamamlanabilir."
+    },
+    {
+     "baslik": "En Sık Kullanılan 30+ Özel Fonksiyon Entegre Edildi",
+     "metin": "Yüksek voltaj batarya teşhisi ve güç kesme, soğutma sıvısı değişimi, klima sistemi yeniden öğrenme, kompresör testi, batarya eşleme, TPMS, ABS, SAS, airbag, ECU ve immobilizer işlemleri dahil 30'u aşkın özel fonksiyon cihaza entegredir. Fonksiyon kapsamı araç marka ve modeline göre değişir."
+    }
+   ],
+   "veri": {
+    "descriptionHtml": "<p><strong>Thinktool CE EVD</strong>, elektrikli araçlar (EV) için geliştirilmiş bir arıza tespit cihazıdır. Tesla dahil 80'i aşkın elektrikli araç markasında aracın tüm kontrol ünitelerini tarar, yüksek voltaj batarya paketini analiz eder, ECU kodlama ve 30'u aşkın özel servis fonksiyonunu tek cihazda sunar. Araca OBD soketinden, batarya paketine ise doğrudan bağlanabilen 3'ü 1 arada ThinkDiag EV birimi sayesinde batarya teşhisi hem araç üzerinde hem de sökülmüş pakette yapılabilir.</p><h3>Elektrikli araç servisinde CE EVD ile çalışma</h3><ul><li><strong>Tam sistem tarama:</strong> aracın tüm kontrol ünitelerindeki hata kodlarını tek taramada okuyun.</li><li><strong>Batarya paketi teşhisi:</strong> batarya yönetim sistemi (BMS) verileri üzerinden arızalı modülü belirleyin.</li><li><strong>EV'ye özgü servis işlemleri:</strong> yüksek voltaj güç kesme, soğutma sıvısı değişimi, klima yeniden öğrenme ve kompresör testi.</li><li><strong>Bulut tabanlı teşhis:</strong> araç verileri ve yazılım bulut altyapısı üzerinden güncel tutulur.</li></ul><h3>Batarya onarımında tamamlayıcı ekipmanlar</h3><p>CE EVD sorunlu modülü bulduktan sonra onarımın devamı için iki cihaz önerilir: hücre değişiminden sonra modül içindeki gerilim farklarını gideren <a href=\"/urun/thinktool-ce-evp802-batarya-modul-dengeleyici\">Thinktool CE EVP802 batarya modül dengeleyici</a> ve modülü ya da paketi şarj, deşarj ve kapasite testinden geçiren <a href=\"/urun/thinktool-ce-evp902-ev-batarya-sarj-desarj-cihazi\">Thinktool CE EVP902 batarya şarj ve deşarj cihazı</a>. Üç cihaz birlikte teşhis, onarım ve doğrulama adımlarının tamamını kapsar.</p>",
+    "faqs": [
+     {
+      "question": "Thinktool CE EVD hangi elektrikli araçlarla uyumlu?",
+      "answer": "CE EVD, Tesla dahil yaygın olarak kullanılan 80'i aşkın elektrikli araç markasında tam sistem teşhis yapar. Aracınızın marka, model ve yılını bize iletirseniz satın almadan önce uyumluluğu sizin için kontrol ederiz."
+     },
+     {
+      "question": "CE EVD batarya paketini nasıl test eder?",
+      "answer": "Cihazla gelen 3'ü 1 arada ThinkDiag EV birimi araca OBD soketinden, batarya paketine ise doğrudan bağlanabilir. Böylece batarya yönetim sistemi (BMS) hata kodları ve batarya verileri hem araç üzerindeyken hem de paket araçtan söküldükten sonra okunabilir."
+     },
+     {
+      "question": "Hangi özel fonksiyonları destekliyor?",
+      "answer": "En sık kullanılan 30'u aşkın servis fonksiyonu entegredir; aralarında yüksek voltaj batarya teşhisi, yüksek voltaj güç kesme, soğutma sıvısı değişimi, klima sistemi yeniden öğrenme, kompresör testi, batarya eşleme, TPMS, ABS, SAS, airbag, ECU ve immobilizer işlemleri bulunur. Fonksiyon kapsamı araç marka ve modeline göre değişir."
+     },
+     {
+      "question": "Batarya onarımı için başka hangi ekipmanlar gerekir?",
+      "answer": "CE EVD arızalı modülü bulmanızı sağlar. Hücre değişiminden sonra modül içindeki gerilim farklarını gidermek için Thinktool CE EVP802 hücre dengeleme cihazı, modülün ya da paketin şarj, deşarj ve kapasite testleri için Thinktool CE EVP902 batarya şarj ve deşarj cihazı kullanılır."
+     },
+     {
+      "question": "Yazılım güncellemeleri ücretli mi?",
+      "answer": "Cihaz 2 yıl ücretsiz yazılım güncellemesiyle gelir. Süre sonunda lisansınızı yenileyerek yeni araç modellerine ve fonksiyonlara erişmeye devam edebilirsiniz."
+     },
+     {
+      "question": "Kurulum ve teknik destek veriyor musunuz?",
+      "answer": "Evet. Cihazınızı aktive edilmiş ve kullanıma hazır şekilde gönderiyoruz. Kurulum, kullanım ve arıza tespiti sırasında telefon, WhatsApp ve uzaktan bağlantı ile destek veriyoruz."
+     }
+    ],
+    "seo": {
+     "title": "Thinktool CE EVD Elektrikli Araç Arıza Tespit Cihazı",
+     "description": "Thinktool CE EVD: Tesla dahil 80'i aşkın elektrikli araç markasında tam sistem teşhis, batarya paketi analizi, ECU kodlama ve 30+ özel fonksiyon."
+    }
+   }
+  }
+ ]
+}

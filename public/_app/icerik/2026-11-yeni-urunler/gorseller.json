@@ -1,0 +1,148 @@
+{
+ "tes402-ana": {
+  "file": "thinktool-tes402-eklem-uclu-endoskop-kamera.webp",
+  "width": 1500,
+  "height": 1200,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "tes402-on": {
+  "file": "thinktool-tes402-video-endoskop-on-gorunum.webp",
+  "width": 829,
+  "height": 663,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "tes402-yan": {
+  "file": "thinktool-tes402-endoskop-ekran-ve-prob.webp",
+  "width": 834,
+  "height": 667,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "evp902-ana": {
+  "file": "thinktool-ce-evp902-batarya-sarj-desarj-cihazi.webp",
+  "width": 1008,
+  "height": 806,
+  "variants": [
+   320,
+   640,
+   960
+  ]
+ },
+ "evp902-hucre-listesi": {
+  "file": "thinktool-ce-evp902-hucre-gerilim-listesi.webp",
+  "width": 1748,
+  "height": 1024,
+  "variants": [
+   320,
+   640,
+   960,
+   1280,
+   1600
+  ]
+ },
+ "evp902-desarj-ayar": {
+  "file": "thinktool-ce-evp902-desarj-testi-ayarlari.webp",
+  "width": 1716,
+  "height": 1006,
+  "variants": [
+   320,
+   640,
+   960,
+   1280,
+   1600
+  ]
+ },
+ "evp902-sarj-ayar": {
+  "file": "thinktool-ce-evp902-sarj-kesme-parametreleri.webp",
+  "width": 1856,
+  "height": 1087,
+  "variants": [
+   320,
+   640,
+   960,
+   1280,
+   1600
+  ]
+ },
+ "evp902-grafik": {
+  "file": "thinktool-ce-evp902-hucre-gerilim-grafigi.webp",
+  "width": 1778,
+  "height": 1044,
+  "variants": [
+   320,
+   640,
+   960,
+   1280,
+   1600
+  ]
+ },
+ "evp802-ana": {
+  "file": "thinktool-ce-evp802-batarya-modul-dengeleyici.webp",
+  "width": 1500,
+  "height": 1200,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "evp802-menu": {
+  "file": "thinktool-ce-evp802-ana-menu.webp",
+  "width": 1671,
+  "height": 979,
+  "variants": [
+   320,
+   640,
+   960,
+   1280,
+   1600
+  ]
+ },
+ "evp802-hucre-tablosu": {
+  "file": "thinktool-ce-evp802-hucre-detay-tablosu.webp",
+  "width": 1755,
+  "height": 1029,
+  "variants": [
+   320,
+   640,
+   960,
+   1280,
+   1600
+  ]
+ },
+ "evp802-histogram": {
+  "file": "thinktool-ce-evp802-hucre-gerilim-histogrami.webp",
+  "width": 1679,
+  "height": 984,
+  "variants": [
+   320,
+   640,
+   960,
+   1280,
+   1600
+  ]
+ },
+ "evp802-batarya-tipi": {
+  "file": "thinktool-ce-evp802-batarya-tipi-secimi.webp",
+  "width": 1777,
+  "height": 1041,
+  "variants": [
+   320,
+   640,
+   960,
+   1280,
+   1600
+  ]
+ }
+}
