@@ -144,6 +144,8 @@ function product_defaults(): array
         'stockStatus' => 'in_stock',
         'stockQuantity' => null,
         'sku' => '',
+        'gtin' => '',
+        'mpn' => '',
         'vehicleTypes' => [],
         'capabilities' => [],
         'keyFigures' => [],
@@ -163,6 +165,26 @@ function product_defaults(): array
         'createdAt' => '',
         'updatedAt' => '',
     ];
+}
+
+/** Barkoddaki boşluk ve tireleri atar ("869 1234-567890" → "8691234567890"). */
+function gtin_normalize(string $v): string
+{
+    return preg_replace('/[\s-]+/', '', $v) ?? '';
+}
+
+/** GTIN (EAN-8, UPC-A, EAN-13, GTIN-14): yalnızca rakam, doğru uzunluk ve doğru kontrol hanesi. Google geçersiz barkodu reddeder. */
+function gtin_valid(string $gtin): bool
+{
+    if (!preg_match('/^(?:\d{8}|\d{12}|\d{13}|\d{14})$/', $gtin) || (int) $gtin === 0) {
+        return false;
+    }
+    $sum = 0;
+    $digits = array_reverse(str_split(substr($gtin, 0, -1)));
+    foreach ($digits as $i => $d) {
+        $sum += (int) $d * ($i % 2 === 0 ? 3 : 1);
+    }
+    return (10 - $sum % 10) % 10 === (int) substr($gtin, -1);
 }
 
 /** Ayrı sütunlarda tutulan alanlar (listeleme/filtreleme için); geri kalanı "data" JSON'undadır. */

@@ -45,6 +45,8 @@ if (is_post()) {
         'stockStatus' => array_key_exists(p_str('stockStatus'), STOCK_STATUSES) ? p_str('stockStatus') : 'in_stock',
         'stockQuantity' => p_num('stockQuantity') === null ? null : max(0, (int) p_num('stockQuantity')),
         'sku' => p_str('sku', 60),
+        'gtin' => gtin_normalize(p_str('gtin', 40)),
+        'mpn' => p_str('mpn', 70),
         'gallery' => array_values(array_filter(array_map('intval', p_json('gallery')))),
         'vehicleTypes' => array_values(array_intersect(array_keys(VEHICLE_TYPES), (array) ($_POST['vehicleTypes'] ?? []))),
         'capabilities' => array_values(array_intersect(array_keys(CAPABILITIES), (array) ($_POST['capabilities'] ?? []))),
@@ -67,6 +69,9 @@ if (is_post()) {
     }
     if ($data['priceUsd'] <= 0) {
         $errors[] = 'Satış fiyatı (USD) girin.';
+    }
+    if ($data['gtin'] !== '' && !gtin_valid($data['gtin'])) {
+        $errors[] = 'Barkod (GTIN) geçersiz: 8, 12, 13 ya da 14 haneli olmalı ve son hanesi tutmalı. Kutudaki barkodu kontrol edin ya da boş bırakın.';
     }
     if ($errors) {
         foreach ($errors as $err) {
@@ -222,6 +227,11 @@ admin_header($id ? $p['title'] : 'Yeni ürün', 'urunler', ['editor' => true]);
       <?= field('Stok durumu', select('stockStatus', STOCK_STATUSES, $p['stockStatus'])) ?>
       <?= field('Stok adedi', input('stockQuantity', $p['stockQuantity'] ?? '', ['inputmode' => 'numeric', 'placeholder' => 'Takip yok']), 'Doluysa her ödenen siparişte düşer.') ?>
       <?= field('Stok kodu (SKU)', input('sku', $p['sku'])) ?>
+    </section>
+    <section class="card stack">
+      <header class="card-head"><h2>Google Alışveriş</h2></header>
+      <?= field('Barkod (GTIN / EAN)', input('gtin', $p['gtin'], ['inputmode' => 'numeric', 'placeholder' => 'Ör. 8691234567890']), 'Kutunun üzerindeki barkod numarası. Ürünün barkodu varsa mutlaka girin; Google barkodsuz ürünü daha az gösterir.') ?>
+      <?= field('Üretici parça no (MPN)', input('mpn', $p['mpn']), 'Üreticinin bu ürüne verdiği parça/model kodu. Barkod yoksa girin.') ?>
     </section>
     <section class="card stack">
       <header class="card-head"><h2>Yayın</h2></header>
