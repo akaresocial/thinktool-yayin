@@ -1,1 +1,1 @@
-ecdc5cf0fe79 kaynak=d1df2fcd2214 icerik=89 2026-11-19T12:58:27.321Z
+c21a21e3c5cf kaynak=d1df2fcd2214 icerik=90 2026-11-20T12:46:43.980Z
