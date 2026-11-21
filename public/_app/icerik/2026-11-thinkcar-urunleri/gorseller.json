@@ -1,0 +1,1253 @@
+{
+ "adas-ana": {
+  "file": "thinktool-adas-kalibrasyon-seti.webp",
+  "width": 820,
+  "height": 700,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "adas-bagaj": {
+  "file": "thinktool-adas-kalibrasyon-seti-katlanmis-bagajda.webp",
+  "width": 1501,
+  "height": 610,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "adas-acc": {
+  "file": "thinktool-adas-acc-radar-kalibrasyonu.webp",
+  "width": 732,
+  "height": 490,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "adas-avm": {
+  "file": "thinktool-adas-360-kamera-kalibrasyonu.webp",
+  "width": 732,
+  "height": 491,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "evkit-ana": {
+  "file": "thinktool-ev-kit-elektrikli-arac-konnektor-seti.webp",
+  "width": 1038,
+  "height": 692,
+  "variants": [
+   320,
+   640,
+   960
+  ]
+ },
+ "evkit-kutu": {
+  "file": "thinktool-ev-kit-kutu-ve-konnektorler.webp",
+  "width": 1438,
+  "height": 802,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "evkit-adaptorler": {
+  "file": "thinktool-ev-kit-18-ev-teshis-adaptoru.webp",
+  "width": 1010,
+  "height": 1453,
+  "variants": [
+   320,
+   640,
+   960
+  ]
+ },
+ "canfd-ana": {
+  "file": "thinktool-can-fd-adaptor.webp",
+  "width": 792,
+  "height": 1369,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "canfd-uclar": {
+  "file": "thinktool-can-fd-adaptor-obd-uclari.webp",
+  "width": 589,
+  "height": 727,
+  "variants": [
+   320
+  ]
+ },
+ "canfd-modul": {
+  "file": "thinktool-can-fd-adaptor-gosterge-isiklari.webp",
+  "width": 870,
+  "height": 1160,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "printer2-ana": {
+  "file": "thinktool-printer-2-usb-rapor-yazicisi.webp",
+  "width": 814,
+  "height": 814,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "printer2-acik": {
+  "file": "thinktool-printer-2-termal-kagit-haznesi.webp",
+  "width": 1120,
+  "height": 710,
+  "variants": [
+   320,
+   640,
+   960
+  ]
+ },
+ "obdkablo-ana": {
+  "file": "thinktool-obd-kablosu-ana-teshis-kablosu.webp",
+  "width": 853,
+  "height": 609,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "obdkablo-vci": {
+  "file": "thinktool-obd-kablosu-thinklink-vci.webp",
+  "width": 619,
+  "height": 619,
+  "variants": [
+   320
+  ]
+ },
+ "pps30-ana": {
+  "file": "thinktool-pps30-aku-sarj-cihazi.webp",
+  "width": 944,
+  "height": 376,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "pps30-panel": {
+  "file": "thinktool-pps30-12-24v-kontrol-paneli.webp",
+  "width": 470,
+  "height": 280,
+  "variants": [
+   320
+  ]
+ },
+ "pps100-ana": {
+  "file": "thinktool-pps100-100a-aku-sarj-cihazi.webp",
+  "width": 617,
+  "height": 270,
+  "variants": [
+   320
+  ]
+ },
+ "pps100-panel": {
+  "file": "thinktool-pps100-on-panel-ve-tasima-kolu.webp",
+  "width": 650,
+  "height": 400,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "pps150-ana": {
+  "file": "thinktool-pps150-programlama-guc-kaynagi.webp",
+  "width": 1077,
+  "height": 668,
+  "variants": [
+   320,
+   640,
+   960
+  ]
+ },
+ "pps150-on": {
+  "file": "thinktool-pps150-on-panel-lcd-ekran.webp",
+  "width": 938,
+  "height": 910,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "pps150-kablolu": {
+  "file": "thinktool-pps150-pens-kablolu-gorunum.webp",
+  "width": 1313,
+  "height": 750,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "pps150-kablolar": {
+  "file": "thinktool-pps150-5-m-aku-pens-ve-ac-kablosu.webp",
+  "width": 822,
+  "height": 348,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "tjs120-ana": {
+  "file": "thinktool-tjs120-aku-takviye-cihazi.webp",
+  "width": 732,
+  "height": 650,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "tjs120-on": {
+  "file": "thinktool-tjs120-sarj-gostergeli-on-yuz.webp",
+  "width": 439,
+  "height": 726,
+  "variants": [
+   320
+  ]
+ },
+ "tjs120-yonler": {
+  "file": "thinktool-tjs120-tum-yonlerden-gorunum.webp",
+  "width": 790,
+  "height": 593,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "tjs160-ana": {
+  "file": "thinktool-tjs160-jump-starter-aku-takviye.webp",
+  "width": 865,
+  "height": 512,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "tjs160-on": {
+  "file": "thinktool-tjs160-lcd-ekranli-on-yuz.webp",
+  "width": 495,
+  "height": 998,
+  "variants": [
+   320
+  ]
+ },
+ "tjs160-portlar": {
+  "file": "thinktool-tjs160-usb-ve-cikis-portlari.webp",
+  "width": 997,
+  "height": 247,
+  "variants": [
+   320,
+   640,
+   960
+  ]
+ },
+ "tjs160-kutu": {
+  "file": "thinktool-tjs160-kutu-icerigi.webp",
+  "width": 1072,
+  "height": 994,
+  "variants": [
+   320,
+   640,
+   960
+  ]
+ },
+ "batterytester-ana": {
+  "file": "thinktool-battery-tester-aku-test-modulu.webp",
+  "width": 730,
+  "height": 381,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "batterytester-gostergeler": {
+  "file": "thinktool-battery-tester-run-power-gostergeleri.webp",
+  "width": 726,
+  "height": 502,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "batterytester-soket": {
+  "file": "thinktool-battery-tester-baglanti-soketi.webp",
+  "width": 576,
+  "height": 581,
+  "variants": [
+   320
+  ]
+ },
+ "gdi200-ana": {
+  "file": "thinktool-gdi-200-enjektor-temizleme-cihazi.webp",
+  "width": 616,
+  "height": 740,
+  "variants": [
+   320
+  ]
+ },
+ "gdi200-cekmece": {
+  "file": "thinktool-gdi-200-aksesuar-cekmecesi.webp",
+  "width": 1600,
+  "height": 750,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "gdi200-silindir": {
+  "file": "thinktool-gdi-200-alti-silindir-olcum-tupleri.webp",
+  "width": 1600,
+  "height": 750,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "gdi100-ana": {
+  "file": "thinktool-gdi-100-enjektor-temizleme-makinesi.webp",
+  "width": 772,
+  "height": 760,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "gdi100-puls": {
+  "file": "thinktool-gdi-100-renkli-puls-kablolari.webp",
+  "width": 1600,
+  "height": 750,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "gdi100-kabin": {
+  "file": "thinktool-gdi-100-entegre-kabin.webp",
+  "width": 1600,
+  "height": 633,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "gdibox-ana": {
+  "file": "thinktool-gdi-box-enjektor-sinyal-jeneratoru.webp",
+  "width": 517,
+  "height": 723,
+  "variants": [
+   320
+  ]
+ },
+ "gdibox-set": {
+  "file": "thinktool-gdi-box-kablo-ve-adaptor-seti.webp",
+  "width": 1000,
+  "height": 1000,
+  "variants": [
+   320,
+   640,
+   960
+  ]
+ },
+ "ac100-ana": {
+  "file": "thinktool-ac100-klima-gazi-dolum-makinesi.webp",
+  "width": 451,
+  "height": 780,
+  "variants": [
+   320
+  ]
+ },
+ "ac100-arac": {
+  "file": "thinktool-ac100-arac-klima-servisi.webp",
+  "width": 1600,
+  "height": 779,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "ac200-ana": {
+  "file": "thinktool-ac200-cift-sistem-klima-gazi-makinesi.webp",
+  "width": 457,
+  "height": 780,
+  "variants": [
+   320
+  ]
+ },
+ "ac200-cift-tup": {
+  "file": "thinktool-ac200-cift-tup-ve-servis-baglantilari.webp",
+  "width": 1158,
+  "height": 782,
+  "variants": [
+   320,
+   640,
+   960
+  ]
+ },
+ "tac647-ana": {
+  "file": "thinktool-tac647-yagsiz-hava-kompresoru.webp",
+  "width": 629,
+  "height": 421,
+  "variants": [
+   320
+  ]
+ },
+ "tac647-380v": {
+  "file": "thinktool-tac647-380v-trifaze-kompresor.webp",
+  "width": 580,
+  "height": 432,
+  "variants": [
+   320
+  ]
+ },
+ "pld212-ana": {
+  "file": "thinktool-pld-212-turbo-duman-kacak-test-cihazi.webp",
+  "width": 848,
+  "height": 1039,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "pld212-yan": {
+  "file": "thinktool-pld-212-turbo-yan-gorunum.webp",
+  "width": 813,
+  "height": 1072,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "pld212-arka": {
+  "file": "thinktool-pld-212-turbo-arka-panel.webp",
+  "width": 932,
+  "height": 974,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "pld222-ana": {
+  "file": "thinktool-pld-222-evap-turbo-kacak-test-cihazi.webp",
+  "width": 682,
+  "height": 720,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "pld222-mod": {
+  "file": "thinktool-pld-222-mod-secim-tuslari.webp",
+  "width": 1077,
+  "height": 652,
+  "variants": [
+   320,
+   640,
+   960
+  ]
+ },
+ "pld222-duman": {
+  "file": "thinktool-pld-222-motor-duman-testi.webp",
+  "width": 1600,
+  "height": 927,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "es401-ana": {
+  "file": "thinktool-es401-dijital-endoskop-kamera.webp",
+  "width": 774,
+  "height": 1137,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "es401-prob": {
+  "file": "thinktool-es401-endoskop-metal-prob.webp",
+  "width": 1500,
+  "height": 1500,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "tpc101-ana": {
+  "file": "thinktool-tpc101-takim-arabasi.webp",
+  "width": 767,
+  "height": 1216,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "tpc101-ust": {
+  "file": "thinktool-tpc101-egimli-ust-tabla.webp",
+  "width": 1500,
+  "height": 1500,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "tpc101-raf": {
+  "file": "thinktool-tpc101-raf-duzeni.webp",
+  "width": 708,
+  "height": 804,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "tpc101-olcu": {
+  "file": "thinktool-tpc101-olculer.webp",
+  "width": 1248,
+  "height": 1339,
+  "variants": [
+   320,
+   640,
+   960
+  ]
+ },
+ "videoscope-ana": {
+  "file": "thinktool-video-scope-usb-endoskop-kamera.webp",
+  "width": 778,
+  "height": 1338,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "videoscope-tablet": {
+  "file": "thinktool-video-scope-tablet-baglantisi.webp",
+  "width": 1431,
+  "height": 814,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "videoscope-uc": {
+  "file": "thinktool-video-scope-kamera-ucu.webp",
+  "width": 1000,
+  "height": 1000,
+  "variants": [
+   320,
+   640,
+   960
+  ]
+ },
+ "t77-ana": {
+  "file": "thinktool-t77-kablolu-ariza-tespit-cihazi.webp",
+  "width": 1600,
+  "height": 1093,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "t77-port": {
+  "file": "thinktool-t77-db15-ve-usb-baglanti-portlari.webp",
+  "width": 1245,
+  "height": 396,
+  "variants": [
+   320,
+   640,
+   960
+  ]
+ },
+ "reader8-ana": {
+  "file": "thinktool-reader-8-obd2-ariza-tespit-cihazi.webp",
+  "width": 1101,
+  "height": 878,
+  "variants": [
+   320,
+   640,
+   960
+  ]
+ },
+ "reader8-on": {
+  "file": "thinktool-reader-8-dokunmatik-ekran-on-gorunum.webp",
+  "width": 750,
+  "height": 430,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "expert195-ana": {
+  "file": "thinktool-expert-195-ariza-tespit-cihazi-ve-vci.webp",
+  "width": 792,
+  "height": 424,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "expert195-arka": {
+  "file": "thinktool-expert-195-on-ve-arka-gorunum.webp",
+  "width": 1600,
+  "height": 453,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "expert195-vci": {
+  "file": "thinktool-expert-195-thinklink-lite-vci.webp",
+  "width": 1600,
+  "height": 1242,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "thinkscanhd-ana": {
+  "file": "thinkscan-hd-agir-vasita-ariza-tespit-cihazi.webp",
+  "width": 1412,
+  "height": 1035,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "thinkscanhd-yan": {
+  "file": "thinkscan-hd-tus-takimli-yan-gorunum.webp",
+  "width": 1358,
+  "height": 938,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "thinkscanhd-canta": {
+  "file": "thinkscan-hd-canta-ve-kamyon-adaptorleri.webp",
+  "width": 1458,
+  "height": 1403,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "masterhd-tablet": {
+  "file": "thinktool-master-agir-vasita-kiti-tablet.webp",
+  "width": 720,
+  "height": 496,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "masterhd-hml": {
+  "file": "thinktool-master-agir-vasita-kiti-hml-vci-modulu.webp",
+  "width": 543,
+  "height": 635,
+  "variants": [
+   320
+  ]
+ },
+ "venu90-ana": {
+  "file": "thinktool-venu-90-tpms-programlama-cihazi.webp",
+  "width": 569,
+  "height": 1446,
+  "variants": [
+   320
+  ]
+ },
+ "venu90-elde": {
+  "file": "thinktool-venu-90-tpms-cihazi-arac-icinde.webp",
+  "width": 1500,
+  "height": 1500,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "venu90-kutu": {
+  "file": "thinktool-venu-90-tpms-cihazi-kutusu.webp",
+  "width": 1600,
+  "height": 968,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "twand200-ana": {
+  "file": "thinktool-t-wand-200-tpms-aktivasyon-cubugu.webp",
+  "width": 1000,
+  "height": 1000,
+  "variants": [
+   320,
+   640,
+   960
+  ]
+ },
+ "twand200-olculer": {
+  "file": "thinktool-t-wand-200-tpms-cubugu-olculeri.webp",
+  "width": 1600,
+  "height": 900,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "twand200-aktivasyon": {
+  "file": "thinktool-t-wand-200-tpms-sensor-aktivasyonu.webp",
+  "width": 1600,
+  "height": 902,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "venu5pro-ana": {
+  "file": "thinktool-venu-5-pro-tpms-sensoru.webp",
+  "width": 1000,
+  "height": 1000,
+  "variants": [
+   320,
+   640,
+   960
+  ]
+ },
+ "venu5pro-on": {
+  "file": "thinktool-venu-5-pro-tpms-sensoru-on-gorunum.webp",
+  "width": 702,
+  "height": 1115,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "venu5pro-elde": {
+  "file": "thinktool-venu-5-pro-tpms-sensoru-boyut.webp",
+  "width": 1600,
+  "height": 1183,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "venu5pro-kutu": {
+  "file": "thinktool-venu-5-pro-tpms-sensoru-kutusu.webp",
+  "width": 892,
+  "height": 1357,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "venu5metal-ana": {
+  "file": "thinktool-venu-5-siyah-metal-supapli-tpms-sensoru.webp",
+  "width": 1000,
+  "height": 1000,
+  "variants": [
+   320,
+   640,
+   960
+  ]
+ },
+ "venu5metal-govde": {
+  "file": "thinktool-venu-5-siyah-metal-tpms-sensoru-govde.webp",
+  "width": 1257,
+  "height": 1264,
+  "variants": [
+   320,
+   640,
+   960
+  ]
+ },
+ "venu5metal-kutu": {
+  "file": "thinktool-venu-5-siyah-metal-tpms-sensoru-kutusu.webp",
+  "width": 978,
+  "height": 1297,
+  "variants": [
+   320,
+   640,
+   960
+  ]
+ },
+ "venu5metal-programlayici": {
+  "file": "thinktool-venu-5-tpms-sensoru-venu-programlayicilar.webp",
+  "width": 1484,
+  "height": 1218,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "tkey101-ana": {
+  "file": "thinktool-tkey-101-anahtar-programlama-seti.webp",
+  "width": 997,
+  "height": 1111,
+  "variants": [
+   320,
+   640,
+   960
+  ]
+ },
+ "tkey101-cihaz": {
+  "file": "thinktool-tkey-101-anahtar-programlayici.webp",
+  "width": 955,
+  "height": 1157,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "tkey101-kumandalar": {
+  "file": "thinktool-tkey-101-universal-kumandalar.webp",
+  "width": 1021,
+  "height": 1093,
+  "variants": [
+   320,
+   640,
+   960
+  ]
+ },
+ "prog2-ana": {
+  "file": "thinktool-prog-2-immobilizer-anahtar-programlayici.webp",
+  "width": 640,
+  "height": 820,
+  "variants": [
+   320
+  ]
+ },
+ "prog2-acili": {
+  "file": "thinktool-prog-2-eeprom-programlayici.webp",
+  "width": 1013,
+  "height": 1416,
+  "variants": [
+   320,
+   640,
+   960
+  ]
+ },
+ "prog2-gorunumler": {
+  "file": "thinktool-prog-2-programlayici-gorunumler.webp",
+  "width": 750,
+  "height": 750,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "prog2-set": {
+  "file": "thinktool-prog-2-kablo-ve-adaptor-seti.webp",
+  "width": 750,
+  "height": 750,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "yedek-master-ekran-tablet": {
+  "file": "thinktool-master-yedek-ekran-tablet-on.webp",
+  "width": 720,
+  "height": 496,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "yedek-master-ekran-aci": {
+  "file": "thinktool-master-yedek-ekran-tablet-aci.webp",
+  "width": 965,
+  "height": 725,
+  "variants": [
+   320,
+   640,
+   960
+  ]
+ },
+ "yedek-master-ekran-cizim": {
+  "file": "thinktool-master-yedek-ekran-cizim.webp",
+  "width": 812,
+  "height": 595,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "yedek-expert391-tablet-on": {
+  "file": "thinktool-expert-391-yedek-tablet-on.webp",
+  "width": 568,
+  "height": 374,
+  "variants": [
+   320
+  ]
+ },
+ "yedek-expert391-tablet-arka": {
+  "file": "thinktool-expert-391-yedek-tablet-arka.webp",
+  "width": 1600,
+  "height": 1006,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "yedek-expert391-tablet-cizim": {
+  "file": "thinktool-expert-391-yedek-tablet-cizim.webp",
+  "width": 793,
+  "height": 562,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "yedek-t391-tablet-on": {
+  "file": "thinktool-t391-yedek-tablet-on.webp",
+  "width": 574,
+  "height": 393,
+  "variants": [
+   320
+  ]
+ },
+ "yedek-t391-tablet-cizim": {
+  "file": "thinktool-t391-yedek-tablet-cizim.webp",
+  "width": 1174,
+  "height": 775,
+  "variants": [
+   320,
+   640,
+   960
+  ]
+ },
+ "yedek-t391-tablet-vci": {
+  "file": "thinktool-t391-yedek-tablet-vci-ile.webp",
+  "width": 788,
+  "height": 398,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "yedek-expert391-anakart-cihaz": {
+  "file": "thinktool-expert-391-yedek-anakart-cihaz-arka.webp",
+  "width": 1600,
+  "height": 1006,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "yedek-expert391-anakart-vci": {
+  "file": "thinktool-expert-391-yedek-anakart-cihaz-vci.webp",
+  "width": 1600,
+  "height": 1028,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "yedek-expert391-batarya-arka": {
+  "file": "thinktool-expert-391-yedek-batarya-cihaz-arka.webp",
+  "width": 1600,
+  "height": 1006,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "yedek-expert391-batarya-on": {
+  "file": "thinktool-expert-391-yedek-batarya-cihaz-on.webp",
+  "width": 568,
+  "height": 374,
+  "variants": [
+   320
+  ]
+ },
+ "yedek-expert391-kablo-cizim": {
+  "file": "thinktool-expert-391-yedek-obd-teshis-kablosu-cizim.webp",
+  "width": 743,
+  "height": 526,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "yedek-expert391-kablo-vci": {
+  "file": "thinktool-expert-391-yedek-kablo-thinklink-vci.webp",
+  "width": 1600,
+  "height": 1028,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "yedek-masterx-tablet-on": {
+  "file": "thinktool-master-x-yedek-tablet-on.webp",
+  "width": 606,
+  "height": 410,
+  "variants": [
+   320
+  ]
+ },
+ "yedek-masterx-tablet-topoloji": {
+  "file": "thinktool-master-x-yedek-tablet-topoloji-ekrani.webp",
+  "width": 552,
+  "height": 347,
+  "variants": [
+   320
+  ]
+ },
+ "yedek-masterx-tablet-cizim": {
+  "file": "thinktool-master-x-yedek-tablet-cizim.webp",
+  "width": 800,
+  "height": 586,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "yedek-master2-kablo-cizim": {
+  "file": "thinktool-master-2-yedek-teshis-kablosu-cizim.webp",
+  "width": 634,
+  "height": 435,
+  "variants": [
+   320
+  ]
+ },
+ "yedek-master2-kablo-vci": {
+  "file": "thinktool-master-2-yedek-kablo-vci-konnektoru-cizim.webp",
+  "width": 284,
+  "height": 406,
+  "variants": []
+ },
+ "yedek-obd2-uzatma-kablo": {
+  "file": "thinktool-obd2-yedek-uzatma-kablosu.webp",
+  "width": 1291,
+  "height": 919,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "yedek-obd2-uzatma-uclar": {
+  "file": "thinktool-obd2-yedek-uzatma-kablosu-uclar.webp",
+  "width": 1000,
+  "height": 1000,
+  "variants": [
+   320,
+   640,
+   960
+  ]
+ },
+ "yedek-master-sarj-adaptor": {
+  "file": "thinktool-master-yedek-sarj-adaptoru-cizim.webp",
+  "width": 682,
+  "height": 528,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "yedek-master-sarj-kablo": {
+  "file": "thinktool-master-yedek-sarj-kablosu-cizim.webp",
+  "width": 727,
+  "height": 436,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "yedek-391-vci-ana": {
+  "file": "thinktool-expert-391-yedek-vci-thinklink-lite.webp",
+  "width": 477,
+  "height": 1031,
+  "variants": [
+   320
+  ]
+ },
+ "yedek-391-vci-tablet": {
+  "file": "thinktool-expert-391-yedek-vci-tablet-ile.webp",
+  "width": 1600,
+  "height": 1017,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "yedek-399-vci-ana": {
+  "file": "thinktool-expert-399-yedek-vci-thinklink-pro.webp",
+  "width": 1600,
+  "height": 1034,
+  "variants": [
+   320,
+   640,
+   960,
+   1280
+  ]
+ },
+ "yedek-399-vci-stand": {
+  "file": "thinktool-expert-399-yedek-vci-sarj-standi.webp",
+  "width": 838,
+  "height": 347,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "yedek-masterx-vci-ana": {
+  "file": "thinktool-master-x-x2-yedek-vci-thinklink.webp",
+  "width": 960,
+  "height": 1353,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "yedek-masterx-vci-x2": {
+  "file": "thinktool-master-x2-yedek-vci-tablet-ile.webp",
+  "width": 831,
+  "height": 416,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "yedek-masterx-vci-x": {
+  "file": "thinktool-master-x-yedek-vci-tablet-ile.webp",
+  "width": 811,
+  "height": 410,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "yedek-lite2-vci-ana": {
+  "file": "thinktool-lite-2-yedek-vci-tablet-ile.webp",
+  "width": 798,
+  "height": 418,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "yedek-lite2-vci-sahne": {
+  "file": "thinktool-lite-2-yedek-vci-atolye-sahnesi.webp",
+  "width": 1080,
+  "height": 670,
+  "variants": [
+   320,
+   640,
+   960
+  ]
+ },
+ "yedek-mastercv-vci-ana": {
+  "file": "thinktool-master-cv-yedek-vci-thinkdiag-hml.webp",
+  "width": 657,
+  "height": 1231,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "yedek-mastercv-vci-yan": {
+  "file": "thinktool-master-cv-yedek-vci-yandan.webp",
+  "width": 1035,
+  "height": 1341,
+  "variants": [
+   320,
+   640,
+   960
+  ]
+ },
+ "yedek-mastercv-vci-tablet": {
+  "file": "thinktool-master-cv-yedek-vci-tablet-ile.webp",
+  "width": 759,
+  "height": 419,
+  "variants": [
+   320,
+   640
+  ]
+ },
+ "yedek-master-vci-ana": {
+  "file": "thinktool-master-yedek-vci-lisanssiz-thinkdiag.webp",
+  "width": 475,
+  "height": 310,
+  "variants": [
+   320
+  ]
+ },
+ "yedek-master-vci-tablet": {
+  "file": "thinktool-master-yedek-vci-lisanssiz-tablet.webp",
+  "width": 720,
+  "height": 496,
+  "variants": [
+   320,
+   640
+  ]
+ }
+}

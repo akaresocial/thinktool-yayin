@@ -24,6 +24,11 @@ const CAPABILITIES = [
     'ev-batarya' => 'EV batarya teşhisi',
     'batarya-bakim' => 'Batarya şarj, deşarj ve dengeleme',
     'gorsel-muayene' => 'Görsel muayene (video endoskop)',
+    'anahtar-programlama' => 'Anahtar ve immobilizer programlama',
+    'klima-servisi' => 'Klima gazı geri kazanım ve dolum',
+    'enjektor-bakim' => 'Enjektör temizleme ve test',
+    'kacak-tespiti' => 'Duman ile kaçak tespiti',
+    'aku-guc' => 'Akü testi, takviye ve güç kaynağı',
 ];
 
 const STOCK_STATUSES = [

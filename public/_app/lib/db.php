@@ -339,6 +339,30 @@ function db_schema_steps(): array
                 db_icerik_uygula($pdo, __DIR__ . '/../icerik/2026-11-yeni-urunler');
             },
         ],
+        // 6 — Expert 391 satış fiyatı 1.738 USD (2026-10-06). Yalnızca bu ürün, bir kez güncellenir.
+        [
+            static function (PDO $pdo): void {
+                $now = gmdate('Y-m-d\\TH:i:s\\Z');
+                $st = $pdo->prepare('UPDATE products SET price_usd = ?, updated_at = ? WHERE id = ? AND slug = ?');
+                $st->execute([1738, $now, 4, 'thinktool-expert-391-ariza-tespit-cihazi']);
+                if ($st->rowCount() === 0) {
+                    return;
+                }
+                // Statik vitrin de güncel fiyatla yeniden derlensin.
+                $v = (int) ($pdo->query("SELECT value FROM meta WHERE key = 'content_version'")->fetchColumn() ?: 0) + 1;
+                $up = $pdo->prepare('INSERT INTO meta (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value');
+                $up->execute(['content_version', (string) $v]);
+                $up->execute(['content_updated_at', $now]);
+            },
+        ],
+        // 7 — THINKCAR bayi listesindeki (28.08.2026) sitede olmayan ürünler: teşhis cihazları, servis ekipmanları, akü ve
+        // güç kaynakları, TPMS, anahtar programlama, ADAS, aksesuar ve yedek parçalar; 6 yeni kategori. Satış fiyatı bayi
+        // fiyatı +%50 (KDV dahil). İçerik ve görseller: _app/icerik/2026-11-thinkcar-urunleri/
+        [
+            static function (PDO $pdo): void {
+                db_icerik_uygula($pdo, __DIR__ . '/../icerik/2026-11-thinkcar-urunleri');
+            },
+        ],
     ];
 }
 
@@ -392,7 +416,7 @@ function db_icerik_uygula(PDO $pdo, string $dir): void
     }
     $gorsel = static fn (mixed $key): ?int => is_string($key) ? ($medya[$key] ?? null) : null;
 
-    $alanlar = array_flip(['modelName', 'badge', 'tagline', 'summary', 'gallery', 'sku', 'vehicleTypes', 'capabilities', 'keyFigures', 'highlights', 'specs', 'compare', 'boxContents', 'sections', 'descriptionHtml', 'faqs', 'seo']);
+    $alanlar = array_flip(['modelName', 'badge', 'tagline', 'summary', 'gallery', 'sku', 'vehicleTypes', 'capabilities', 'keyFigures', 'highlights', 'specs', 'compare', 'boxContents', 'sections', 'descriptionHtml', 'faqs', 'seo', 'mpn']);
     foreach ($c['urunler'] ?? [] as $p) {
         if ($q('SELECT 1 FROM products WHERE slug = ?', [$p['slug']])->fetchColumn()) {
             continue;
