@@ -288,9 +288,10 @@ register_shutdown_function(function () {
   @unlink("$OPS/.running");
 });
 
-// Gereken PHP işlevleri: biri kapalıysa hiçbir şeye dokunmadan çık (cron kurar)
+// Gereken PHP işlevleri: biri kapalıysa hiçbir şeye dokunmadan çık (cron kurar).
+// symlink burada yok: Alastyr Ekim 2026'da kapattı; yalnızca eksik "uploads" bağlantısı için gerekir, onu da cron kurar.
 $eksik = array_values(array_filter(['curl_init', 'curl_exec', 'curl_multi_init', 'curl_multi_exec', 'curl_multi_select', 'curl_multi_add_handle',
-  'curl_multi_remove_handle', 'gzopen', 'gzread', 'hash_file', 'flock', 'symlink', 'touch', 'rename'], function ($f) { return !function_exists($f); }));
+  'curl_multi_remove_handle', 'gzopen', 'gzread', 'hash_file', 'flock', 'touch', 'rename'], function ($f) { return !function_exists($f); }));
 if ($eksik) { logla('HATA: sunucuda kapalı PHP işlevi: ' . implode(', ', $eksik) . ' — tetik çalışamaz (cron kurar)'); durum('no-functions', '', implode(' ', $eksik)); bitir(500, ['durum' => 'islev-yok', 'eksik' => $eksik]); }
 
 $lg = "$OPS/deploy.log";
@@ -428,7 +429,10 @@ sil($stage);
 @touch("$WEBROOT/.htaccess");
 // görseller: web kökündeki "uploads" → ~/thinktool-data/uploads
 // (geri dönüşte kaldırılsın diye .moved-in'e yazılır; installed.txt'ye girmez — korunan ad)
-if (!var_mi("$WEBROOT/uploads") && is_dir("$DATA/uploads") && @symlink("$DATA/uploads", "$WEBROOT/uploads")) { ekle("$SNAP/.moved-in", 'uploads'); logla('uploads bağlantısı oluşturuldu'); }
+if (!var_mi("$WEBROOT/uploads") && is_dir("$DATA/uploads")) {
+  if (function_exists('symlink') && @symlink("$DATA/uploads", "$WEBROOT/uploads")) { ekle("$SNAP/.moved-in", 'uploads'); logla('uploads bağlantısı oluşturuldu'); }
+  else { logla('UYARI: uploads bağlantısı oluşturulamadı (symlink kapalı) — cron kuracak'); }
+}
 logla("kuruldu: $remote / $rid ($n dosya; anlık yedek $SNAP)");
 
 // ---------------------------------------------------------------- canlı test (_ops/urls.txt: "yol beklenen_kod [beklenen_hedef]")
